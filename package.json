@@ -1,0 +1,12 @@
+{
+  "name": "4in-line-ai",
+  "version": "1.0.0",
+  "description": "A simple 4 in Line AI player",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
