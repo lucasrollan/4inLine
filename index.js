@@ -5,8 +5,8 @@ var logBoard = require('./logBoard');
 var isWinningMove = require('./isWinningMove');
 
 var board = [
-    '', //0
-    '', //1
+    '',  //0
+    '',  //1
     '',  //2
     'X',  //3
     '',  //4
@@ -45,8 +45,7 @@ function turn() {
 
 var playerInput = {
     'X': function AI_turn(){
-        var tree = playTree(board, 'X', 7);
-        var bestMove = findBestMove(tree, 'X', board);
+        var bestMove = playTree(board, 'X', 6);
 
         console.log('> I think my best move is at column', bestMove + 1);
 
