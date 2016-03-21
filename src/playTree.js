@@ -96,6 +96,10 @@ function getBestRatedIndex(list, board) {
     return result;
 }
 
+function equal(a, b) {
+    return a === b ? a : false;
+}
+
 module.exports = function playTree(board, piece, depth) {
     totalPlaysConsidered = 0;
     var result = rateMoves(board, piece, depth);
@@ -105,8 +109,11 @@ module.exports = function playTree(board, piece, depth) {
     });
 
     result = _.sortBy(result, 'score').reverse();
-    
-    debugger;
+
+    if (_.reduce(_(result).pluck('score'), equal)) {
+        //WILL LOSE OR WIN FOR SURE
+    }
+
     console.log('> Done thinking, analyzed', totalPlaysConsidered, 'different movements');
 
     return getBestRatedIndex(result, board);
