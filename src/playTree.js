@@ -1,5 +1,7 @@
 var _ = require('underscore');
 var isWinningMove = require('./isWinningMove');
+var aiReport = require('./ai/report');
+var msg = aiReport.keys;
 
 var WINNING_MOVE = 1;
 var LOSING_MOVE = -1;
@@ -96,25 +98,55 @@ function getBestRatedIndex(list, board) {
     return result;
 }
 
-function equal(a, b) {
-    return a === b ? a : false;
+function handleEquallyScoredOptions(moves) {
+    var score = moves[0].score;
+
+    var parts = _.partition(moves, function(move) {
+        return move.score === score;
+    });
+
+    var equallyScored = parts[0];
+    var rest = parts[1];
+
+    return _.shuffle(equallyScored).concat(rest);
+}
+
+function willWinForSure(moves) {
+    function isWin(move) {
+        return move.score === WINNING_MOVE;
+    }
+
+    return !_.size(_(moves).reject(isWin));
+}
+
+function willLoseForSure(moves) {
+    function isLose(move) {
+        return move.score === LOSING_MOVE;
+    }
+
+    return !_.size(_(moves).reject(isLose));
 }
 
 module.exports = function playTree(board, piece, depth) {
     totalPlaysConsidered = 0;
-    var result = rateMoves(board, piece, depth);
+    var result;
+    var results = rateMoves(board, piece, depth);
 
-    result = result.map(function(score, column) {
+    results = results.map(function(score, column) {
         return {score: score, column: column};
     });
 
-    result = _.sortBy(result, 'score').reverse();
+    results = _.sortBy(results, 'score').reverse();
 
-    if (_.reduce(_(result).pluck('score'), equal)) {
-        //WILL LOSE OR WIN FOR SURE
+    if (willWinForSure(results)) {
+        result = playTree(board, piece, 0);
+    } else if (willLoseForSure(results)) {
+        result = playTree(board, getOppositePiece(piece), 0);
+    } else {
+        result = getBestRatedIndex(handleEquallyScoredOptions(results), board);
     }
 
-    console.log('> Done thinking, analyzed', totalPlaysConsidered, 'different movements');
+    aiReport.log(msg.AI_ANALYSIS_REPORT, {total: totalPlaysConsidered});
 
-    return getBestRatedIndex(result, board);
+    return result;
 };

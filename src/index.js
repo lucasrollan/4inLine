@@ -1,26 +1,39 @@
+var _ = require('underscore');
+
 var playTree = require('./playTree');
 var findBestMove = require('./findBestMove');
 var readlineSync = require('readline-sync');
 var logBoard = require('./logBoard');
 var isWinningMove = require('./isWinningMove');
+var i18n = require('./i18n');
+var aiReport = require('./ai/report');
+var msg = aiReport.keys;
 
-var board = [
-    '',  //0
-    '',  //1
-    '',  //2
-    'X',  //3
-    '',  //4
-    '',  //5
-    ''  //6
-];
+i18n.setLanguage('es');
 
-logBoard(board);
+var gameState = {
+    board: [
+        '',  //0
+        '',  //1
+        '',  //2
+        '',  //3
+        '',  //4
+        '',  //5
+        ''  //6
+    ],
+    playing: true,
+    players: ['HUMAN', 'AI'],
+    currentPlayer: null
+};
+
+logBoard(gameState.board);
 
 var playing = true;
-var currentPlayer = 'O';
+var players = ['X', 'O'];
+var currentPlayer = _.sample(players);
 
 function printBoard() {
-    var print = logBoard(board);
+    var print = logBoard(gameState.board);
 
     print.forEach(function(line) {
         console.log(line);
@@ -34,9 +47,9 @@ function turn() {
 
     var index = playerInput[currentPlayer]();
 
-    board[index] += currentPlayer;
+    gameState.board[index] += currentPlayer;
 
-    if (isWinningMove(board, index)) {
+    if (isWinningMove(gameState.board, index)) {
         playing = false;
     } else {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
@@ -45,16 +58,25 @@ function turn() {
 
 var playerInput = {
     'X': function AI_turn(){
-        var bestMove = playTree(board, 'X', 6);
+        console.log('>>>', i18n.getString(i18n.keys.TURN_AI)(), '<<<');
+        aiReport.log(msg.AI_THINKING);
 
-        console.log('> I think my best move is at column', bestMove + 1);
+        var bestMove = playTree(gameState.board, 'X', 6);
+
+        aiReport.log(msg.AI_CHOSEN_COLUMN, {column: bestMove + 1});
 
         return bestMove;
     },
     'O': function human_turn() {
+        console.log('>>>', i18n.getString(i18n.keys.TURN_HUMAN)(), '<<<');
         var options = [1, 2, 3, 4, 5, 6, 7];
 
-        var index = readlineSync.keyInSelect(options, 'Which column?');
+        var index = readlineSync.keyInSelect(
+            options, i18n.getString(i18n.keys.SELECT_COLUMN)(),
+            {
+                cancel: false
+            }
+        );
 
         return index;
     }
@@ -64,5 +86,5 @@ while (playing) {
     turn();
 }
 printBoard();
-console.log('> GAME OVER');
-console.log('> WINNER:', currentPlayer);
+console.log('>', i18n.getString(i18n.keys.GAME_OVER)());
+console.log('>', i18n.getString(i18n.keys.WINNER_PLAYER)({player: currentPlayer}));

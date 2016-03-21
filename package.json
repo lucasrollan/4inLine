@@ -4,7 +4,9 @@
   "description": "A simple 4 in Line AI player",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "build": "browserify ./src/index.js -o ./dist/main.js",
+    "watch": "watchify ./src/index.js -o ./dist/main.js",
+    "start": "node ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,5 +14,9 @@
   "dependencies": {
     "readline-sync": "^1.4.1",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "watchify": "^3.7.0"
   }
 }
