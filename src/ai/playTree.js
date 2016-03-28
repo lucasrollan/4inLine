@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var isWinningMove = require('./isWinningMove');
-var aiReport = require('./ai/report');
+var aiReport = require('./report');
 var msg = aiReport.keys;
 
 var WINNING_MOVE = 1;

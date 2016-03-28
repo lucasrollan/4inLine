@@ -11,8 +11,11 @@ var i18n = {
         'SELECT_COLUMN': 'Which column?',
         'GAME_OVER': 'GAME OVER',
         'WINNER_PLAYER': 'WINNER: <%= player %>',
+        'GAME_RESET': 'Do you want to play again?',
         'TURN_HUMAN': 'Your turn',
-        'TURN_AI': 'AI turn'
+        'TURN_AI': 'AI turn',
+        'PLAYER_AI': 'AI',
+        'PLAYER_HUMAN': 'Human'
     },
     'es' : {
         'AI_CHOSEN_COLUMN': 'Se elegió la columna <%= column %>',
@@ -21,8 +24,11 @@ var i18n = {
         'SELECT_COLUMN': 'Selecciona una columna',
         'GAME_OVER': 'JUEGO TERMINADO',
         'WINNER_PLAYER': 'GANADOR: <%= player %>',
+        'GAME_RESET': 'Quieres jugar de nuevo?',
         'TURN_HUMAN': 'Tu turno',
-        'TURN_AI': 'Turno de la IA'
+        'TURN_AI': 'Turno de la IA',
+        'PLAYER_AI': 'IA',
+        'PLAYER_HUMAN': 'Humano'
     }
 };
 
