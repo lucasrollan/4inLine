@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var i18n = require('../i18n');
+var i18n = require('../languages');
 
 var strategies = {
     'terminal': {

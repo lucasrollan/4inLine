@@ -1,17 +1,25 @@
 var _ = require('underscore');
 var aiReport = require('../ai/report');
-var logBoard = require('../logBoard');
 var readlineSync = require('readline-sync');
-var i18n = require('../i18n');
+var i18n = require('../languages');
 
 var ui = {
     drawBoard: function() {
-        var print = logBoard(gameState.board);
+        var board = gameState.board;
+        var row;
+        var cap = '+-----------------------+';
 
-        print.forEach(function(line) {
-            console.log(line);
-        });
-
+        console.log(cap);
+        for (var r=5; r>=0; r--) {
+            row = '|  ';
+            for (var c=0; c<board.length; c++) {
+                row += board[c].length > r ? board[c][r] : ' ';
+                row += '  ';
+            }
+            row += '|';
+            console.log(row);
+        }
+        console.log(cap);
         console.log('   1  2  3  4  5  6  7   ');
     },
     log: function() {

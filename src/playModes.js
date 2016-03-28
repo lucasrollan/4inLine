@@ -4,7 +4,7 @@ var playTree = require('./playTree');
 var aiReport = require('./ai/report');
 var logBoard = require('./logBoard');
 var readlineSync = require('readline-sync');
-var i18n = require('./i18n');
+var i18n = require('./languages');
 
 i18n.setLanguage('es');
 
