@@ -4,14 +4,15 @@
   "description": "A simple 4 in Line AI player",
   "main": "index.js",
   "scripts": {
-    "build": "browserify ./src/index.js -o ./dist/main.js",
-    "watch": "watchify ./src/index.js -o ./dist/main.js",
+    "build": "browserify ./src/browser.js -o ./dist/main.js",
+    "watch": "watchify ./src/browser.js -o ./dist/main.js",
     "start": "node ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "q": "^1.4.1",
     "readline-sync": "^1.4.1",
     "underscore": "^1.8.3"
   },

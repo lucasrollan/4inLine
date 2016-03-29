@@ -1,7 +1,8 @@
 var _ = require('underscore');
 var gameAI = require('./ai');
-var interfaces = require('./interfaces');
+var i18n = require('./languages');
 
+var interfaces;
 var gameRunning = true;
 var players = {
     'AI': 'AI',
@@ -19,10 +20,14 @@ var gameState = {
 };
 
 module.exports = {
-    setInterface: interfaces.setInterface,
-    setLanguage: interfaces.setLanguage,
+    setInterface: setInterface,
+    setLanguage: i18n.setLanguage,
     go: go
 };
+
+function setInterface(value) {
+    interfaces = value;
+}
 
 function go() {
     while (gameRunning) {
@@ -56,7 +61,7 @@ var game = {
 };
 var turn = {
     start: function() {
-        interfaces.turn.start();
+        interfaces.turn.start(gameState.currentPlayer);
     },
     input: function() {
         var column;
@@ -71,9 +76,10 @@ var turn = {
     },
     addPiece: function(column) {
         gameState.board[column] += pieces[gameState.currentPlayer];
+        interfaces.turn.move(gameState.currentPlayer, column);
     },
     end: function(column) {
-        interfaces.turn.end(column);
+        interfaces.turn.end(gameState.currentPlayer);
 
         if (gameAI.isWinningMove(gameState.board, column)) {
             gameState.playing = false;
