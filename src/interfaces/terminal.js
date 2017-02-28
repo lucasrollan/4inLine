@@ -43,6 +43,7 @@ module.exports = {
     },
     turn: {
         start: turnStart,
+	    move: addPiece,
         input: getHumanInput,
         end: _.noop
     },
@@ -86,4 +87,8 @@ function aiThinking() {
 
 function aiChosen(column) {
     ui.aiReport.log(ui.msg.AI_CHOSEN_COLUMN, {column: column + 1});
+}
+
+function addPiece(player, column) {
+	gameState.board.addPiece(player, column);
 }

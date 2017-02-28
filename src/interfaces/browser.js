@@ -5,7 +5,7 @@ var i18n = require('../languages');
 
 var board;
 var playerTurn;
-var playerChoice = -1;
+var getHumanChoice = null;
 
 var ui = {
     Piece: (function() {
@@ -147,13 +147,13 @@ function addPiece(player, column) {
 
 function getHumanInput(boardFromOtherPlace) { //ask for available columns
     board.turn('HUMAN');
+    var promise = $q.defer();
 
-    playerChoice = -1;
-    //while (playerChoice < 0);
+    getHumanChoice = function(column) {
+        promise.resolve(column);
+    };
 
-    board.addPiece('HUMAN', playerChoice);
-
-    return index;
+    return promise;
 }
 
 function turnEnd(player, column) {
