@@ -79,6 +79,7 @@ var ui = {
                 this.container.className = player ? ['turn-', player].join() : '';
             },
             addPiece: function(player, column) {
+                console.log('addPiece', column)
                 this.columns[column].addPiece(player);
             }
         };
@@ -147,7 +148,7 @@ function addPiece(player, column) {
 
 function getHumanInput(boardFromOtherPlace) { //ask for available columns
     board.turn('HUMAN');
-    var promise = $q.defer();
+    var promise = q.defer();
 
     getHumanChoice = function(column) {
         promise.resolve(column);

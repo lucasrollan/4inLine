@@ -4,20 +4,34 @@
   "description": "A simple 4 in Line AI player",
   "main": "index.js",
   "scripts": {
-    "build": "browserify ./src/browser.js -o ./dist/main.js",
-    "watch": "watchify ./src/browser.js -o ./dist/main.js",
-    "start": "node ./src",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "build2": "browserify ./src/browser.js -o ./dist/main.js",
+    "watch2": "watchify ./src/browser.js -o ./dist/main.js",
+    "start2": "node ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "js-logger": "^1.6.0",
     "q": "^1.4.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "readline-sync": "^1.4.1",
+    "styled-components": "^5.1.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "@types/react": "^16.9.38",
+    "@types/react-dom": "^16.9.8",
+    "@types/styled-components": "^5.1.0",
     "browserify": "^13.0.0",
-    "watchify": "^3.7.0"
+    "source-map-loader": "^1.0.0",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.5",
+    "watchify": "^3.7.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   }
 }
