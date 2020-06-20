@@ -1,10 +1,8 @@
-import { Disc, Board, Player, BoardRuleset, AgentType, Match } from "../model";
-import { MatchState } from "../model";
-import Logger from "js-logger";
+import { Disc, Board, Player, AgentType, Match, BoardSize } from "../model";
 
 export interface PresentationBoard {
     columns: Disc[][]
-    grid: BoardRuleset
+    size: BoardSize
 }
 export interface PresentationPlayer {
     name: string,
@@ -44,10 +42,9 @@ export class PresentationTranslator {
     }
 
     static transformBoard(board: Board): PresentationBoard {
-        Logger.log('transformBoard', board)
         return {
             columns: board.columns.map(c => c.discs),
-            grid: board.grid,
+            size: board.size,
         }
     }
 }

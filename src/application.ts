@@ -1,16 +1,7 @@
 import Logger from 'js-logger'
-import { Match, MatchFactory, BoardFactory, Agent, HumanAgent, MatchType, AgentType, PlayerAction, AIAgent, Ruleset, Disc } from './model'
+import { Match, MatchFactory, Agent, HumanAgent, AgentType, PlayerAction, AIAgent, GameVariation } from './model'
 
-const ruleset: Ruleset = {
-    grid: {
-        columns: 7,
-        rows: 5,
-    },
-    lineObjective: 4,
-    firstPlayer: Disc.B,
-}
-
-export const startMatch = (matchType: MatchType, secondPlayer: AgentType): Match => {
+export const startMatch = (gameVariation: GameVariation, secondPlayer: AgentType): Match => {
     const secondAgent = secondPlayer === AgentType.Human
         ? new HumanAgent()
         : new AIAgent()
@@ -21,7 +12,7 @@ export const startMatch = (matchType: MatchType, secondPlayer: AgentType): Match
     ] as [Agent, Agent]
     agents[0].name = 'Player 1'
     agents[1].name = 'Player 2'
-    const match = MatchFactory.build(ruleset, agents)
+    const match = MatchFactory.build(gameVariation, agents)
 
     match.attemptToRunAI()
 

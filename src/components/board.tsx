@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Disc } from '../model';
 import { PresentationBoard } from "../presentation";
 
-const size = 50;
+const size = 70;
 
 interface DiscProps { disc: Disc }
 const StyledDisc = styled.div`
@@ -55,8 +55,8 @@ export const BoardComponent = (props: BoardComponentProps) => (<div>
         {props.board.columns.map((col, index) =>
             <Column
                 col={col}
-                rows={props.board.grid.rows}
-                canDrop={col.length < props.board.grid.rows}
+                rows={props.board.size.rows}
+                canDrop={col.length < props.board.size.rows}
                 onSelected={() => props.onPerformAction(index)} />
         )}
     </StyledBoard>

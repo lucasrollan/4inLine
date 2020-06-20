@@ -2,6 +2,7 @@ import { Player, PlayerAction } from "../player"
 import { Board } from "../board"
 import { MatchState } from "./match-state"
 
+// TODO: use immutable object instead of this dance
 export class MatchStateUpdater {
     static performAction(state: MatchState, action: PlayerAction): MatchState {
         const boardAction = {...action, disc: state.currentTurnPlayer.disc}

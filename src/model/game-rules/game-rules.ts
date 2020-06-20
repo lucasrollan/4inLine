@@ -1,9 +1,13 @@
-import { Board } from "./board"
-import { PlayerAction } from "./player"
-import { Ruleset } from "./ruleset"
-import { Match } from "./match"
+import { Board } from "../board"
+import { PlayerAction } from "../player"
+import { Match } from "../match"
+import { GameVariation, gameVariationRuleset } from "./variations"
 
 export class GameRules {
+    static getVariationGridSize(gameVariation: GameVariation) {
+        return gameVariationRuleset[gameVariation].boardSize
+    }
+
     static isActionAllowed(board: Board, action: PlayerAction): boolean {
         return !board.isColumnFull(action.columnIndex)
     }
@@ -18,12 +22,14 @@ export class GameRules {
         return board.isFull()
     }
 
-    static isWinningAction(board: Board, action: PlayerAction, ruleset: Ruleset): boolean {
+    static isWinningAction(board: Board, action: PlayerAction, gameVariation: GameVariation): boolean {
         const row = board.getDiscCountInColumn(action.columnIndex) - 1
-        return this.isLine(board, action.columnIndex, row, ruleset.lineObjective)
+        return this.isLine(board, action.columnIndex, row, gameVariation)
     }
 
-    static isLine(board: Board, colIndex: number, row: number, lineLength: number): boolean {
+    static isLine(board: Board, colIndex: number, row: number, gameVariation: GameVariation): boolean {
+        const lineLength = gameVariationRuleset[gameVariation].lineObjective
+
         return this.isVerticalLine(board, colIndex, row, lineLength)
             || this.isHorizontalLine(board, colIndex, row, lineLength)
             || this.isAscendingDiagonalLine(board, colIndex, row, lineLength)
@@ -72,7 +78,7 @@ export class GameRules {
             }
             length += 1
         }
-        const columnCount = board.grid.columns
+        const columnCount = board.size.columns
         for (let i = colIndex + 1; i < columnCount && length < lineLength; i += 1) {
             if (columns[i].discs[row] !== playerDisc) {
                 break
@@ -103,8 +109,8 @@ export class GameRules {
             }
             length += 1
         }
-        const columnCount = board.grid.columns
-        const rowCount = board.grid.rows
+        const columnCount = board.size.columns
+        const rowCount = board.size.rows
         for (
             let i = colIndex + 1,
             j = row + 1;
@@ -127,8 +133,8 @@ export class GameRules {
         }
 
         const columns = board.columns
-        const columnCount = board.grid.columns
-        const rowCount = board.grid.rows
+        const columnCount = board.size.columns
+        const rowCount = board.size.rows
         let playerDisc = column.discs[row]
         let length = 1
         for (

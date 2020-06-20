@@ -1,6 +1,6 @@
 import { BoardFactory } from "./board-factory"
 import { Board } from "./board"
-import { Disc } from "./disc"
+import { Disc } from "../disc"
 
 export class BoardActionPerformer {
     static dropDisc(board: Board, columnIndex: number, disc?: Disc): Board {

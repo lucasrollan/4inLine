@@ -4,8 +4,8 @@ import * as ReactDOM from "react-dom";
 
 import { BoardComponent } from "./components/board";
 
-import { MatchType, AgentType } from "./model";
-import { PresentationMatchState, PresentationTranslator, startMatchRequest, performActionRequest } from "./presentation";
+import { GameVariation, AgentType } from "./model";
+import { PresentationMatchState, startMatchRequest, performActionRequest } from "./presentation";
 
 Logger.useDefaults();
 
@@ -24,7 +24,7 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
     }
 
     componentDidMount() {
-        startMatchRequest(MatchType.connect4, AgentType.AI)
+        startMatchRequest(GameVariation.connect4, AgentType.AI)
             .then(match =>
                 this.setState(match)
             )

@@ -1,4 +1,4 @@
-import { MaybeDisc } from "./disc"
+import { MaybeDisc } from "../disc"
 
 export class BoardColumn {
     discs: MaybeDisc[] = []

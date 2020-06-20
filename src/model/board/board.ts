@@ -1,25 +1,24 @@
 import { BoardColumn } from "./board-column"
-import { BoardRuleset } from "./board-ruleset"
-import { GameRules } from "../game-rules"
 import { PlayerAction } from "../player"
 import { BoardActionPerformer } from "./board-action-performer"
 
+export interface BoardSize {
+    columns: number
+    rows: number
+}
+
 export class Board {
     columns: BoardColumn[] = []
-    constructor (public grid: BoardRuleset) {}
+    constructor (public size: BoardSize) {}
 
-    isWinningConditionAtColumn(columnIndex: number, lineObjective: number): boolean {
-        const row = this.getDiscCountInColumn(columnIndex) - 1
-        return GameRules.isLine(this, columnIndex, row, lineObjective)
-    }
     isEmpty() {
         return this.columns.every(column => column.discs.length === 0)
     }
     isFull(): boolean {
-        return this.columns.every(column => column.discs.length === this.grid.rows)
+        return this.columns.every(column => column.discs.length === this.size.rows)
     }
     isColumnFull(columnIndex: number): boolean {
-        return this.columns[columnIndex].discs.length === this.grid.rows
+        return this.columns[columnIndex].discs.length === this.size.rows
     }
     dropDisc(action: PlayerAction): Board {
         return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)

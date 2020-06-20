@@ -1,17 +1,16 @@
 import { Board, Disc } from "../board"
 import { PlayerAction } from "../player"
-import { Ruleset } from "../ruleset"
-import { GameRules } from "../game-rules"
+import { GameRules, GameVariation } from "../game-rules"
 import Logger from "js-logger"
 
-export function getInput(board: Board, disc: Disc, ruleset: Ruleset, depth: number): PlayerAction {
+export function getInput(board: Board, disc: Disc, gameVariation: GameVariation, depth: number): PlayerAction {
     if (board.isEmpty()) {
         return {
-            columnIndex: Math.floor(board.grid.columns/2)
+            columnIndex: Math.floor(board.size.columns/2)
         }
     }
 
-    const avaliableActions = rateAvailableActions(board, disc, ruleset, depth)
+    const avaliableActions = rateAvailableActions(board, disc, gameVariation, depth)
     Logger.info('Available actions', avaliableActions)
 
     return getBestRatedAction(avaliableActions)
@@ -37,9 +36,9 @@ function getBestRatedAction(avaliableActions: ActionRating[]): PlayerAction {
     return highestRated
 }
 
-function rateAvailableActions(board: Board, disc: Disc, ruleset: Ruleset, depth: number): ActionRating[] {
+function rateAvailableActions(board: Board, disc: Disc, gameVariation: GameVariation, depth: number): ActionRating[] {
     let ratings: ActionRating[] = []
-    const columnCount = board.grid.columns
+    const columnCount = board.size.columns
     for(let i = 0; i < columnCount; i += 1) {
         const action: PlayerAction = {
             columnIndex: i,
@@ -50,11 +49,11 @@ function rateAvailableActions(board: Board, disc: Disc, ruleset: Ruleset, depth:
 
             let rating = 0
             let actionsConsidered = 1
-            if (isWinningAction(boardToRate, action, ruleset)) {
+            if (isWinningAction(boardToRate, action, gameVariation)) {
                 rating = 1
             } else if (depth > 0) {
                 const opponentDisc = action.disc === Disc.A ? Disc.B : Disc.A
-                const opponentActionRatings = rateAvailableActions(boardToRate, opponentDisc, ruleset, depth - 1)
+                const opponentActionRatings = rateAvailableActions(boardToRate, opponentDisc, gameVariation, depth - 1)
 
                 rating = -averageRating(opponentActionRatings)
                 actionsConsidered += sumActionsConsidered(opponentActionRatings)
@@ -74,9 +73,9 @@ function rateAvailableActions(board: Board, disc: Disc, ruleset: Ruleset, depth:
     return ratings
 }
 
-function isWinningAction(board: Board, action: PlayerAction, ruleset: Ruleset): boolean {
+function isWinningAction(board: Board, action: PlayerAction, gameVariation: GameVariation): boolean {
     const row = board.getDiscCountInColumn(action.columnIndex) - 1
-    return GameRules.isLine(board, action.columnIndex, row, ruleset.lineObjective)
+    return GameRules.isLine(board, action.columnIndex, row, gameVariation)
 }
 
 function averageRating(ratings: ActionRating[] = []): number {
@@ -102,25 +101,3 @@ function sumActionsConsidered(ratings: ActionRating[] = []): number {
     }
     return sum
 }
-
-
-// function rateMoves(board, piece, depth, playerPiece) {
-//     var nextMoves;
-//     var tempBoard;
-//     playerPiece = playerPiece || piece;
-//     var oppositePiece = getOppositePiece(piece);
-//     var isOpponent = playerPiece === oppositePiece;
-//     var result = getMoves(board, piece, isOpponent);
-
-//     if (depth) {
-//         for (var i = 0; i < board.length; i++) {
-//             if (result[i] === 0 && columnHasSpace(board, i)) {
-//                 tempBoard = createBoardWithColumn(board, i, piece);
-//                 nextMoves = rateMoves(tempBoard, oppositePiece, depth - 1, playerPiece);
-//                 result[i] = avg(nextMoves); //should be divided?
-//             }
-//         }
-//     }
-
-//     return result;
-// }
