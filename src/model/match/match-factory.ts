@@ -14,7 +14,7 @@ export class MatchFactory {
         ]
         const state: MatchState = { // TODO: move to gameRules.getInitialState
             board,
-            currentPlayerTurn: match.players[0],
+            currentTurnPlayer: match.players[0],
             ongoing: true,
             winner: null,
         }

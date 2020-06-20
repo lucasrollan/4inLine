@@ -3,10 +3,11 @@ import { Board } from "../board"
 import { MatchState } from "./match-state"
 
 export class MatchStateUpdater {
-    static performAction(state: MatchState, action: PlayerAction, columnIndex: number): MatchState {
+    static performAction(state: MatchState, action: PlayerAction): MatchState {
+        const boardAction = {...action, disc: state.currentTurnPlayer.disc}
         return this.setBoard(
             state,
-            state.board.performAction(action, columnIndex, state.currentPlayerTurn.disc)
+            state.board.performAction(boardAction)
         )
     }
 
@@ -17,12 +18,12 @@ export class MatchStateUpdater {
         return this.set(state, 'ongoing', value)
     }
 
-    static setCurrentPlayerTurn(state: MatchState, player: Player): MatchState {
-        return this.set(state, 'currentPlayerTurn', player)
+    static setCurrentTurnPlayer(state: MatchState, player: Player): MatchState {
+        return this.set(state, 'currentTurnPlayer', player)
     }
 
     static gameWon(state: MatchState, ): MatchState {
-        const nextState = this.set(state, 'winner', state.currentPlayerTurn)
+        const nextState = this.set(state, 'winner', state.currentTurnPlayer)
         return this.set(nextState, 'ongoing', false)
     }
 

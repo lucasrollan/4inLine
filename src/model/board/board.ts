@@ -1,9 +1,8 @@
 import { BoardColumn } from "./board-column"
 import { BoardRuleset } from "./board-ruleset"
 import { BoardObjectiveChecker } from "./board-objective-checker"
-import { PlayerAction } from "../player"
+import { PlayerActionType, PlayerAction } from "../player"
 import { BoardActionPerformer } from "./board-action-performer"
-import { Disc } from "./disc"
 
 export class Board {
     columns: BoardColumn[] = []
@@ -19,9 +18,9 @@ export class Board {
     isFull(): boolean {
         return this.columns.every(column => column.discs.length === this.grid.rows)
     }
-    performAction(action: PlayerAction, columnIndex: number, disc?: Disc): Board {
-        if (action === PlayerAction.dropDisc) {
-            return BoardActionPerformer.dropDisc(this, columnIndex, disc)
+    performAction(action: PlayerAction): Board {
+        if (action.type === PlayerActionType.dropDisc) {
+            return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
         }
     }
 }

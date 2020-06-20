@@ -5,24 +5,38 @@ import * as ReactDOM from "react-dom";
 import { BoardComponent } from "./components/board";
 
 import { startMatch, performAction } from './application'
-import { PlayerAction, MatchType, AgentType } from "./model";
-import { PresentationModel, PresentationTranslator } from "./presentation/presentation-model";
+import { PlayerActionType, MatchType, AgentType } from "./model";
+import { PresentationMatchState, PresentationTranslator, startMatchRequest, performActionRequest } from "./presentation";
 
 Logger.useDefaults();
 
-const match = startMatch(MatchType.connect4, AgentType.Human)
-
-class MatchComponent extends React.Component<{}, PresentationModel> {
+class MatchComponent extends React.Component<{}, PresentationMatchState> {
     constructor(props: {}) {
         super(props)
 
-        this.state = PresentationTranslator.translateFromDomain(match.state)
+        this.state = {
+            board: null,
+            currentPlayer: null,
+            matchId: null,
+            ongoing: false,
+            players: null,
+            winner: null,
+        }
     }
 
-    handlePerformAction(action: PlayerAction, columnIndex?: number) {
+    componentDidMount() {
+        startMatchRequest(MatchType.connect4, AgentType.AI)
+            .then(match =>
+                this.setState(match)
+            )
+    }
+
+    handlePerformAction(action: PlayerActionType, columnIndex?: number) {
         if (this.state.ongoing) {
-            performAction(match, action, columnIndex)
-            this.setState(PresentationTranslator.translateFromDomain(match.state))
+            performActionRequest('', action, columnIndex)
+                .then(match =>
+                    this.setState(match)
+                )
         }
     }
 

@@ -1,9 +1,9 @@
 import { BoardRuleset, MaybeDisc } from "./board";
-import { PlayerAction } from "./player";
+import { PlayerActionType } from "./player";
 
 export interface Ruleset {
     grid: BoardRuleset,
     lineObjective: number,
-    allowedActions: PlayerAction[],
+    allowedActions: PlayerActionType[],
     firstPlayer?: MaybeDisc,
 }

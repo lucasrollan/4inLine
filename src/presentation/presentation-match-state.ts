@@ -1,4 +1,4 @@
-import { Disc, Board, Player, BoardRuleset, AgentType } from "../model";
+import { Disc, Board, Player, BoardRuleset, AgentType, Match } from "../model";
 import { MatchState } from "../model";
 import Logger from "js-logger";
 
@@ -11,7 +11,9 @@ export interface PresentationPlayer {
     type: AgentType,
     color: string,
 }
-export interface PresentationModel {
+export interface PresentationMatchState {
+    matchId: string,
+    players: PresentationPlayer[],
     board: PresentationBoard
     currentPlayer: PresentationPlayer
     winner: PresentationPlayer
@@ -19,12 +21,14 @@ export interface PresentationModel {
 }
 
 export class PresentationTranslator {
-    static translateFromDomain(match: MatchState): PresentationModel {
+    static translateFromDomain(match: Match): PresentationMatchState {
         return ({
-            board: this.transformBoard(match.board),
-            currentPlayer: this.transformPlayer(match.currentPlayerTurn),
-            ongoing: match.ongoing,
-            winner: this.transformPlayer(match.winner),
+            matchId: match.id,
+            board: this.transformBoard(match.state.board),
+            players: match.players.map(this.transformPlayer),
+            currentPlayer: this.transformPlayer(match.state.currentTurnPlayer),
+            ongoing: match.state.ongoing,
+            winner: this.transformPlayer(match.state.winner),
         })
     }
 
