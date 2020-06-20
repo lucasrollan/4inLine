@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import styled from 'styled-components';
-import { Disc, PlayerActionType } from '../model';
+import { Disc } from '../model';
 import { PresentationBoard } from "../presentation";
 
 const size = 50;
@@ -19,7 +19,7 @@ interface ColumnProps {
     col: Disc[]
     rows: number
     canDrop: boolean
-    onSelected: (action: PlayerActionType) => void
+    onSelected: () => void
 }
 const StyledColumn = styled.div`
     width: ${size}px;
@@ -37,7 +37,7 @@ const StyledDropIndicator = styled(StyledDisc)`
 `
 const Column = ({ col, rows, canDrop, onSelected }: ColumnProps) => <StyledColumn
     rows={rows}
-    onClick={() => canDrop && onSelected(PlayerActionType.dropDisc)}>
+    onClick={() => canDrop && onSelected()}>
         {col.map(
             disc => <StyledDisc disc={disc} />
         )}
@@ -45,7 +45,7 @@ const Column = ({ col, rows, canDrop, onSelected }: ColumnProps) => <StyledColum
 
 export interface BoardComponentProps {
     board: PresentationBoard
-    onPerformAction: (action: PlayerActionType, columnIndex: number) => void
+    onPerformAction: (columnIndex: number) => void
 }
 const StyledBoard = styled.div`
     display: flex;
@@ -57,7 +57,7 @@ export const BoardComponent = (props: BoardComponentProps) => (<div>
                 col={col}
                 rows={props.board.grid.rows}
                 canDrop={col.length < props.board.grid.rows}
-                onSelected={(action: PlayerActionType) => props.onPerformAction(action, index)} />
+                onSelected={() => props.onPerformAction(index)} />
         )}
     </StyledBoard>
 </div>)

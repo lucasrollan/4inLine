@@ -4,8 +4,7 @@ import * as ReactDOM from "react-dom";
 
 import { BoardComponent } from "./components/board";
 
-import { startMatch, performAction } from './application'
-import { PlayerActionType, MatchType, AgentType } from "./model";
+import { MatchType, AgentType } from "./model";
 import { PresentationMatchState, PresentationTranslator, startMatchRequest, performActionRequest } from "./presentation";
 
 Logger.useDefaults();
@@ -31,9 +30,9 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
             )
     }
 
-    handlePerformAction(action: PlayerActionType, columnIndex?: number) {
+    handlePerformAction(columnIndex?: number) {
         if (this.state.ongoing) {
-            performActionRequest('', action, columnIndex)
+            performActionRequest('', columnIndex)
                 .then(match =>
                     this.setState(match)
                 )

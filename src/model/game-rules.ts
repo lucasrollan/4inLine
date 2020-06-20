@@ -1,7 +1,28 @@
-import { Board } from "."
-import Logger from "js-logger"
+import { Board } from "./board"
+import { PlayerAction } from "./player"
+import { Ruleset } from "./ruleset"
+import { Match } from "./match"
 
-export class BoardObjectiveChecker {
+export class GameRules {
+    static isActionAllowed(board: Board, action: PlayerAction): boolean {
+        return !board.isColumnFull(action.columnIndex)
+    }
+
+    static getNextPlayer(match: Match) {
+        return match.state.currentTurnPlayer === match.players[0]
+            ? match.players[1]
+            : match.players[0]
+    }
+
+    static isDraw(board: Board) {
+        return board.isFull()
+    }
+
+    static isWinningAction(board: Board, action: PlayerAction, ruleset: Ruleset): boolean {
+        const row = board.getDiscCountInColumn(action.columnIndex) - 1
+        return this.isLine(board, action.columnIndex, row, ruleset.lineObjective)
+    }
+
     static isLine(board: Board, colIndex: number, row: number, lineLength: number): boolean {
         return this.isVerticalLine(board, colIndex, row, lineLength)
             || this.isHorizontalLine(board, colIndex, row, lineLength)

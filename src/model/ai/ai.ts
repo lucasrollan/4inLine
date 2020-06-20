@@ -1,11 +1,17 @@
 import { Board, Disc } from "../board"
-import { PlayerAction, PlayerActionType } from "../player"
+import { PlayerAction } from "../player"
 import { Ruleset } from "../ruleset"
-import { BoardObjectiveChecker } from "../board/board-objective-checker"
+import { GameRules } from "../game-rules"
 import Logger from "js-logger"
 
 export function getInput(board: Board, disc: Disc, ruleset: Ruleset, depth: number): PlayerAction {
-    const avaliableActions: ActionRating[] = rateAvailableActions(board, disc, ruleset, depth)
+    if (board.isEmpty()) {
+        return {
+            columnIndex: Math.floor(board.grid.columns/2)
+        }
+    }
+
+    const avaliableActions = rateAvailableActions(board, disc, ruleset, depth)
     Logger.info('Available actions', avaliableActions)
 
     return getBestRatedAction(avaliableActions)
@@ -36,12 +42,11 @@ function rateAvailableActions(board: Board, disc: Disc, ruleset: Ruleset, depth:
     const columnCount = board.grid.columns
     for(let i = 0; i < columnCount; i += 1) {
         const action: PlayerAction = {
-            type: PlayerActionType.dropDisc,
             columnIndex: i,
             disc: disc,
         }
-        // if (actionIsLegal) {
-            const boardToRate = board.performAction(action)
+        if (GameRules.isActionAllowed(board, action)) {
+            const boardToRate = board.dropDisc(action)
 
             let rating = 0
             let actionsConsidered = 1
@@ -60,7 +65,10 @@ function rateAvailableActions(board: Board, disc: Disc, ruleset: Ruleset, depth:
                 rating,
                 actionsConsidered,
             })
-        // }
+            if (rating === 1) {
+                break
+            }
+        }
     }
 
     return ratings
@@ -68,7 +76,7 @@ function rateAvailableActions(board: Board, disc: Disc, ruleset: Ruleset, depth:
 
 function isWinningAction(board: Board, action: PlayerAction, ruleset: Ruleset): boolean {
     const row = board.getDiscCountInColumn(action.columnIndex) - 1
-    return BoardObjectiveChecker.isLine(board, action.columnIndex, row, ruleset.lineObjective)
+    return GameRules.isLine(board, action.columnIndex, row, ruleset.lineObjective)
 }
 
 function averageRating(ratings: ActionRating[] = []): number {

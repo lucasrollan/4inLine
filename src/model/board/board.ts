@@ -1,7 +1,7 @@
 import { BoardColumn } from "./board-column"
 import { BoardRuleset } from "./board-ruleset"
-import { BoardObjectiveChecker } from "./board-objective-checker"
-import { PlayerActionType, PlayerAction } from "../player"
+import { GameRules } from "../game-rules"
+import { PlayerAction } from "../player"
 import { BoardActionPerformer } from "./board-action-performer"
 
 export class Board {
@@ -9,21 +9,25 @@ export class Board {
     constructor (public grid: BoardRuleset) {}
 
     isWinningConditionAtColumn(columnIndex: number, lineObjective: number): boolean {
-        const row = this.columns[columnIndex].discs.length - 1
-        return BoardObjectiveChecker.isVerticalLine(this, columnIndex, row, lineObjective)
-            || BoardObjectiveChecker.isHorizontalLine(this, columnIndex, row, lineObjective)
-            || BoardObjectiveChecker.isAscendingDiagonalLine(this, columnIndex, row, lineObjective)
-            || BoardObjectiveChecker.isDescendingDiagonalLine(this, columnIndex, row, lineObjective)
+        const row = this.getDiscCountInColumn(columnIndex) - 1
+        return GameRules.isLine(this, columnIndex, row, lineObjective)
+    }
+    isEmpty() {
+        return this.columns.every(column => column.discs.length === 0)
     }
     isFull(): boolean {
         return this.columns.every(column => column.discs.length === this.grid.rows)
     }
-    performAction(action: PlayerAction): Board {
-        if (action.type === PlayerActionType.dropDisc) {
-            return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
-        }
+    isColumnFull(columnIndex: number): boolean {
+        return this.columns[columnIndex].discs.length === this.grid.rows
+    }
+    dropDisc(action: PlayerAction): Board {
+        return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
     }
     getDiscCountInColumn(columnIndex: number): number {
         return this.columns[columnIndex].discs.length
+    }
+    getDiscAt(columnIndex: number, row: number) {
+        return this.columns[columnIndex].discs[row]
     }
 }

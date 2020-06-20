@@ -1,26 +1,37 @@
 import { Ruleset } from "../ruleset"
 import { Agent } from "../agent"
 import { Match } from "./match"
-import { Board, Disc } from "../board"
+import { Disc, BoardFactory } from "../board"
 import { MatchState } from "./match-state"
 
 export class MatchFactory {
-    static build(ruleset: Ruleset, board: Board, agents: [Agent, Agent]): Match {
+    static build(ruleset: Ruleset, agents: [Agent, Agent]): Match {
         const matchId = Date.now().toString()
         const match = new Match(matchId, ruleset)
         match.players = [
             { agent: agents[0], disc: Disc.A },
             { agent: agents[1], disc: Disc.B },
         ]
-        const state: MatchState = { // TODO: move to gameRules.getInitialState
+
+        match.state = this.buildMatchState(match, ruleset)
+
+        return match
+    }
+
+    static buildMatchState(match: Match, ruleset: Ruleset): MatchState {
+        const board = BoardFactory.build(ruleset.grid)
+
+        const firstPlayer = ruleset.firstPlayer
+            ? match.players.find(p => p.disc === ruleset.firstPlayer)
+            : match.players[0]
+
+        const state: MatchState = {
             board,
-            currentTurnPlayer: match.players[0],
+            currentTurnPlayer: firstPlayer,
             ongoing: true,
             winner: null,
         }
 
-        match.state = state
-
-        return match
+        return state
     }
 }

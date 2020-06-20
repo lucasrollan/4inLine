@@ -1,5 +1,5 @@
 import { Board, Disc } from "./board"
-import { PlayerActionType, PlayerAction } from "./player"
+import { PlayerAction } from "./player"
 import { getInput } from "./ai"
 import { Ruleset } from "./ruleset"
 

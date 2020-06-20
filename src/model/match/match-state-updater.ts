@@ -7,7 +7,7 @@ export class MatchStateUpdater {
         const boardAction = {...action, disc: state.currentTurnPlayer.disc}
         return this.setBoard(
             state,
-            state.board.performAction(boardAction)
+            state.board.dropDisc(boardAction)
         )
     }
 

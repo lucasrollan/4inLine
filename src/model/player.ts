@@ -8,13 +8,7 @@ export interface Player {
     disc: Disc
 }
 
-export enum PlayerActionType {
-    dropDisc = 'DROP_DISC',
-    // popDisc = 'POP_DISC', TODO: create
-}
-
 export interface PlayerAction {
-    type: PlayerActionType
     columnIndex: number
     disc?: Disc
 }
