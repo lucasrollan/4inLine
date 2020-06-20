@@ -26,7 +26,7 @@ export class Match {
 
     runAITurn(): void {
         const ai = this.state.currentTurnPlayer.agent as AIAgent
-        const action: PlayerAction = ai.getInput(this.state.board, this.state.currentTurnPlayer.disc, 4)
+        const action: PlayerAction = ai.getInput(this.state.board, this.state.currentTurnPlayer.disc, this.ruleset)
         
         this.completeTurn(action)
     }

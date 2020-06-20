@@ -1,6 +1,14 @@
 import { Board } from "."
+import Logger from "js-logger"
 
 export class BoardObjectiveChecker {
+    static isLine(board: Board, colIndex: number, row: number, lineLength: number): boolean {
+        return this.isVerticalLine(board, colIndex, row, lineLength)
+            || this.isHorizontalLine(board, colIndex, row, lineLength)
+            || this.isAscendingDiagonalLine(board, colIndex, row, lineLength)
+            || this.isDescendingDiagonalLine(board, colIndex, row, lineLength)
+    }
+
     static isVerticalLine(board: Board, colIndex: number, row: number, lineLength: number): boolean {
         const column = board.columns[colIndex]
         if (column.isEmpty()) {
@@ -10,6 +18,7 @@ export class BoardObjectiveChecker {
         const discCount = column.discs.length
         let playerDisc = column.discs[row]
         let length = 1
+        // TODO: can I make abstract these loops and make them easier to read?
         for (let i = row - 1; i >= 0 && length < lineLength; i -= 1) {
             // TODO: board.getDiscAt(column, row)
             if (column.discs[i] !== playerDisc) {
@@ -26,6 +35,7 @@ export class BoardObjectiveChecker {
 
         return length >= lineLength
     }
+
     static isHorizontalLine(board: Board, colIndex: number, row: number, lineLength: number): boolean {
         const column = board.columns[colIndex]
         if (column.isEmpty()) {
@@ -51,6 +61,7 @@ export class BoardObjectiveChecker {
 
         return length >= lineLength
     }
+
     static isAscendingDiagonalLine(board: Board, colIndex: number, row: number, lineLength: number): boolean {
         const column = board.columns[colIndex]
         if (column.isEmpty()) {

@@ -14,7 +14,7 @@ export class BoardActionPerformer {
         const nextBoard = BoardFactory.buildFrom(board)
         nextBoard.columns[columnIndex] = newColumn
 
-        Logger.log('dropped disc', nextBoard, newColumn, columnIndex, disc)
+        // Logger.log('dropped disc', nextBoard, newColumn, columnIndex, disc)
 
         return nextBoard
     }

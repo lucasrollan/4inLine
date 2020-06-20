@@ -1,5 +1,7 @@
 import { Board, Disc } from "./board"
 import { PlayerActionType, PlayerAction } from "./player"
+import { getInput } from "./ai"
+import { Ruleset } from "./ruleset"
 
 export enum AgentType {
     Human = 'HUMAN',
@@ -20,11 +22,8 @@ export class HumanAgent implements Agent {
 export class AIAgent implements Agent {
     type = AgentType.AI
     name: string
-    getInput(board: Board, disc: Disc, depth: number): PlayerAction {
-        return {
-            type: PlayerActionType.dropDisc,
-            columnIndex: 0,
-            disc
-        }
+    // TODO: depth should come from some other place
+    getInput(board: Board, disc: Disc, ruleset: Ruleset): PlayerAction {
+        return getInput(board, disc, ruleset, 5)
     }
 }

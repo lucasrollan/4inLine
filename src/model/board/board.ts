@@ -23,4 +23,7 @@ export class Board {
             return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
         }
     }
+    getDiscCountInColumn(columnIndex: number): number {
+        return this.columns[columnIndex].discs.length
+    }
 }
