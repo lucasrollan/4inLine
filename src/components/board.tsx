@@ -1,7 +1,8 @@
 import * as React from "react";
 
 import styled from 'styled-components';
-import { Match, Board, BoardColumn, Disc, PlayerAction } from '../main';
+import { Disc, PlayerAction } from '../model';
+import { PresentationBoard } from "../presentation/presentation-model";
 
 const size = 50;
 
@@ -15,7 +16,7 @@ const StyledDisc = styled.div`
 `
 
 interface ColumnProps {
-    col: BoardColumn
+    col: Disc[]
     rows: number
     canDrop: boolean
     onSelected: (action: PlayerAction) => void
@@ -37,13 +38,13 @@ const StyledDropIndicator = styled(StyledDisc)`
 const Column = ({ col, rows, canDrop, onSelected }: ColumnProps) => <StyledColumn
     rows={rows}
     onClick={() => canDrop && onSelected(PlayerAction.dropDisc)}>
-        {col.discs.map(
+        {col.map(
             disc => <StyledDisc disc={disc} />
         )}
 </StyledColumn>
 
 export interface BoardComponentProps {
-    board: Board
+    board: PresentationBoard
     onPerformAction: (action: PlayerAction, columnIndex: number) => void
 }
 const StyledBoard = styled.div`
@@ -55,7 +56,7 @@ export const BoardComponent = (props: BoardComponentProps) => (<div>
             <Column
                 col={col}
                 rows={props.board.grid.rows}
-                canDrop={col.discs.length < props.board.grid.rows}
+                canDrop={col.length < props.board.grid.rows}
                 onSelected={(action: PlayerAction) => props.onPerformAction(action, index)} />
         )}
     </StyledBoard>

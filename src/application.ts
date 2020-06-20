@@ -1,15 +1,16 @@
-import { Match, MatchFactory, Board, BoardFactory, PlayerAction, ActionPerformer, Agent, HumanAgent } from './main'
+import Logger from 'js-logger'
+import { Match, MatchFactory, BoardFactory, PlayerAction, Agent, HumanAgent, AIAgent, MatchType, AgentType } from './model'
 
 const ruleset = {
     grid: {
         columns: 7,
         rows: 6,
     },
-    lineObjective: 5,
+    lineObjective: 4,
     allowedActions: [PlayerAction.dropDisc],
 }
 
-export const startMatch = (): Match => {
+export const startMatch = (matchType: MatchType, secondPlayer: AgentType): Match => {
     const agents = [
         new HumanAgent(),
         new HumanAgent(),
@@ -19,11 +20,12 @@ export const startMatch = (): Match => {
     const board = BoardFactory.build(ruleset.grid)
     const match = MatchFactory.build(ruleset, board, agents)
 
+    Logger.log('starting', match)
+
     return match
 }
 
-export const performAction = (match: Match, action: PlayerAction, index?: number): void => {
-    if (action === PlayerAction.dropDisc) {
-        ActionPerformer.dropDisc(match, index)
-    }
+export const performAction = (match: Match, action: PlayerAction, columnIndex: number): void => {
+    Logger.log('performAction', match, action, columnIndex)
+    match.performAction(action, columnIndex)
 }

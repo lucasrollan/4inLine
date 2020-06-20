@@ -1,49 +1,28 @@
+import Logger from 'js-logger'
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { BoardComponent } from "./components/board";
 
 import { startMatch, performAction } from './application'
-import { PlayerAction, Board, Match, Player, Disc } from "./main";
+import { PlayerAction, MatchType, AgentType } from "./model";
+import { PresentationModel, PresentationTranslator } from "./presentation/presentation-model";
 
-const match = startMatch()
+Logger.useDefaults();
 
-class PresentationTranslator {
-    static translateFromDomain(match: Match): PresentationModel {
-        return ({
-            board: match.board,
-            currentPlayer: this.transformPlayer(match.currentPlayer),
-            ongoing: match.ongoing,
-            winner: this.transformPlayer(match.winner),
-        })
-    }
-
-    static transformPlayer(player: Player): {
-        name: string,
-        color: string,
-    } {
-        if (!player) {
-            return null
-        }
-        return {
-            name: player.agent.name,
-            color: player.disc === Disc.A ? 'red' : 'cyan',
-        }
-    }
-}
-
+const match = startMatch(MatchType.connect4, AgentType.Human)
 
 class MatchComponent extends React.Component<{}, PresentationModel> {
     constructor(props: {}) {
         super(props)
 
-        this.state = PresentationTranslator.translateFromDomain(match)
+        this.state = PresentationTranslator.translateFromDomain(match.state)
     }
 
     handlePerformAction(action: PlayerAction, columnIndex?: number) {
         if (this.state.ongoing) {
             performAction(match, action, columnIndex)
-            this.setState(PresentationTranslator.translateFromDomain(match))
+            this.setState(PresentationTranslator.translateFromDomain(match.state))
         }
     }
 
@@ -75,16 +54,3 @@ ReactDOM.render(
     <MatchComponent />,
     document.getElementById("example")
 );
-
-interface PresentationModel {
-    board: Board,
-    currentPlayer: {
-        name: string,
-        color: string,
-    },
-    ongoing: boolean,
-    winner: {
-        name: string,
-        color: string,
-    }
-}
