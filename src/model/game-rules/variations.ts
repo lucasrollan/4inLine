@@ -5,7 +5,6 @@ export enum GameVariation {
     connect4 = 'CONNECT_4',
     connect5 = 'CONNECT_5',
     tiny = 'TINY',
-    connect4Infinity = 'CONNECT_4_INF',
 }
 
 export const gameVariationRuleset = {
@@ -22,7 +21,7 @@ export const gameVariationRuleset = {
             columns: 9,
             rows: 6
         },
-        lineObjective: 4,
+        lineObjective: 5,
         firstPlayer: Disc.B,
     } as Ruleset,
     [GameVariation.tiny]: {
@@ -33,18 +32,10 @@ export const gameVariationRuleset = {
         lineObjective: 4,
         firstPlayer: Disc.B,
     } as Ruleset,
-    [GameVariation.connect4Infinity]: {
-        boardSize: {
-            columns: 7,
-            rows: 4
-        },
-        lineObjective: 4,
-        firstPlayer: Disc.B,
-        infinite: true,
-    } as Ruleset,
 }
 
 export const gameVariationStartingBoard = {
+    [GameVariation.connect4]: null as Disc[][],
     [GameVariation.connect5]: [
         [Disc.A, Disc.B, Disc.A, Disc.B, Disc.A, Disc.B],
         [],
@@ -55,5 +46,6 @@ export const gameVariationStartingBoard = {
         [],
         [],
         [Disc.B, Disc.A, Disc.B, Disc.A, Disc.B, Disc.A],
-    ] as Disc[][]
+    ] as Disc[][],
+    [GameVariation.tiny]: null as Disc[][],
 }

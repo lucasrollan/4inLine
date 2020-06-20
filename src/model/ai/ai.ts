@@ -3,14 +3,16 @@ import { PlayerAction } from "../player"
 import { GameRules, GameVariation } from "../game-rules"
 import Logger from "js-logger"
 
-export function getInput(board: Board, disc: Disc, gameVariation: GameVariation, depth: number): PlayerAction {
+const ratingActionsDepth = 4
+
+export function getInput(board: Board, disc: Disc, gameVariation: GameVariation): PlayerAction {
     if (board.isEmpty()) {
         return {
             columnIndex: Math.floor(board.size.columns/2)
         }
     }
 
-    const avaliableActions = rateAvailableActions(board, disc, gameVariation, depth)
+    const avaliableActions = rateAvailableActions(board, disc, gameVariation, ratingActionsDepth)
     Logger.info('Available actions', avaliableActions)
 
     return getBestRatedAction(avaliableActions)
@@ -74,8 +76,7 @@ function rateAvailableActions(board: Board, disc: Disc, gameVariation: GameVaria
 }
 
 function isWinningAction(board: Board, action: PlayerAction, gameVariation: GameVariation): boolean {
-    const row = board.getDiscCountInColumn(action.columnIndex) - 1
-    return GameRules.isLine(board, action.columnIndex, row, gameVariation)
+    return GameRules.isLine(board, action.columnIndex, gameVariation)
 }
 
 function averageRating(ratings: ActionRating[] = []): number {

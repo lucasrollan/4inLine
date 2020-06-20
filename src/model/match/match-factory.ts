@@ -1,4 +1,4 @@
-import { Ruleset, GameVariation, GameRules } from "../game-rules"
+import { GameVariation, GameRules } from "../game-rules"
 import { Agent } from "../agent"
 import { Match } from "./match"
 import { Disc, BoardFactory } from "../board"
@@ -20,14 +20,15 @@ export class MatchFactory {
 
     static buildMatchState(match: Match): MatchState {
         const boardSize = GameRules.getVariationGridSize(match.gameVariation)
-        const board = BoardFactory.build(boardSize)
+        const initialBoard = GameRules.getVariationInitialBoard(match.gameVariation)
+        const board = BoardFactory.build(boardSize, initialBoard)
 
         const firstPlayer = match.players[0]
 
         const state: MatchState = {
             board,
             currentTurnPlayer: firstPlayer,
-            ongoing: true,
+            isOngoing: true,
             winner: null,
         }
 

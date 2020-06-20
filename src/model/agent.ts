@@ -22,8 +22,7 @@ export class HumanAgent implements Agent {
 export class AIAgent implements Agent {
     type = AgentType.AI
     name: string
-    // TODO: depth should come from some other place
     getInput(board: Board, disc: Disc, gameVariation: GameVariation): PlayerAction {
-        return getInput(board, disc, gameVariation, 5)
+        return getInput(board, disc, gameVariation)
     }
 }

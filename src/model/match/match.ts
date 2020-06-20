@@ -4,6 +4,7 @@ import { MatchState } from "./match-state"
 import { MatchStateUpdater } from "./match-state-updater"
 import { AgentType, AIAgent } from "../agent"
 import { GameRules } from "../game-rules"
+import Logger from "js-logger"
 
 export class Match {
     players: [Player, Player]
@@ -15,7 +16,10 @@ export class Match {
     ) {}
 
     attemptToRunAI() {
-        if (this.state.currentTurnPlayer.agent.type === AgentType.AI) {
+        if (
+            this.state.isOngoing
+            && this.state.currentTurnPlayer.agent.type === AgentType.AI
+        ) {
             this.runAITurn()
         }
     }
@@ -28,8 +32,9 @@ export class Match {
     }
 
     completeTurn(action: PlayerAction): void {
-        if (GameRules.isActionAllowed(this.state.board, action)) {
+        if (this.state.isOngoing && GameRules.isActionAllowed(this.state.board, action)) {
             this.state = MatchStateUpdater.performAction(this.state, action)
+            Logger.log('action was performed', this.state)
 
             if(GameRules.isWinningAction(this.state.board, action, this.gameVariation)) {
                 this.state = MatchStateUpdater.gameWon(this.state)

@@ -17,7 +17,7 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
             board: null,
             currentPlayer: null,
             matchId: null,
-            ongoing: false,
+            isOngoing: false,
             players: null,
             winner: null,
         }
@@ -31,7 +31,7 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
     }
 
     handlePerformAction(columnIndex?: number) {
-        if (this.state.ongoing) {
+        if (this.state.isOngoing) {
             performActionRequest('', columnIndex)
                 .then(match =>
                     this.setState(match)
@@ -48,16 +48,16 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
                 />
             }
             {
-                this.state.ongoing && this.state.currentPlayer && 
+                this.state.isOngoing && this.state.currentPlayer && 
                     <div style={{ color: this.state.currentPlayer.color}}>
                         {this.state.currentPlayer.name}'s turn
                     </div>
             }
             {
-                !this.state.ongoing && 'Game Over! '
+                !this.state.isOngoing && 'Game Over! '
             }
             {
-                !this.state.ongoing && (this.state.winner ? `${this.state.winner.name} won` : 'It\'s a draw!')
+                !this.state.isOngoing && (this.state.winner ? `${this.state.winner.name} won` : 'It\'s a draw!')
             }
         </div>
     }

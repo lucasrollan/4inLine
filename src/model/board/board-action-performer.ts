@@ -8,7 +8,8 @@ export class BoardActionPerformer {
         const newColumn = column.clone()
         newColumn.discs = column.discs.concat(disc)
 
-        const nextBoard = BoardFactory.buildFrom(board)
+        const nextBoard = BoardFactory.build(board.size)
+        nextBoard.columns = [ ...board.columns ]
         nextBoard.columns[columnIndex] = newColumn
 
         return nextBoard

@@ -1,21 +1,18 @@
 import { Board, BoardSize } from "./board"
 import { BoardColumn } from "./board-column"
+import { Disc } from "../disc"
 
 export class BoardFactory {
-    static build(grid: BoardSize): Board {
-        const board = new Board(grid)
-        for(let i = 0; i<grid.columns; i++) {
+    static build(size: BoardSize, initialBoard?: Disc[][]): Board {
+        const board = new Board(size)
+        for(let i = 0; i<size.columns; i++) {
             const column = new BoardColumn()
+            if(initialBoard) {
+                column.discs = [ ...initialBoard[i] ]
+            }
             board.columns = board.columns.concat(column)
         }
 
         return board
-    }
-
-    static buildFrom(board: Board): Board {
-        const newBoard = new Board(board.size)
-        newBoard.columns = [...board.columns]
-
-        return newBoard
     }
 }

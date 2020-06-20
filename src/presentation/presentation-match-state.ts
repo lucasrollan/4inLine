@@ -15,7 +15,7 @@ export interface PresentationMatchState {
     board: PresentationBoard
     currentPlayer: PresentationPlayer
     winner: PresentationPlayer
-    ongoing: boolean
+    isOngoing: boolean
 }
 
 export class PresentationTranslator {
@@ -25,7 +25,7 @@ export class PresentationTranslator {
             board: this.transformBoard(match.state.board),
             players: match.players.map(this.transformPlayer),
             currentPlayer: this.transformPlayer(match.state.currentTurnPlayer),
-            ongoing: match.state.ongoing,
+            isOngoing: match.state.isOngoing,
             winner: this.transformPlayer(match.state.winner),
         })
     }

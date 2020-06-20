@@ -16,7 +16,7 @@ export class MatchStateUpdater {
         return this.set(state, 'board', board)
     }
     static setOngoing(state: MatchState, value: boolean): MatchState {
-        return this.set(state, 'ongoing', value)
+        return this.set(state, 'isOngoing', value)
     }
 
     static setCurrentTurnPlayer(state: MatchState, player: Player): MatchState {
@@ -25,11 +25,11 @@ export class MatchStateUpdater {
 
     static gameWon(state: MatchState, ): MatchState {
         const nextState = this.set(state, 'winner', state.currentTurnPlayer)
-        return this.set(nextState, 'ongoing', false)
+        return this.set(nextState, 'isOngoing', false)
     }
 
     static gameDraw(state: MatchState, ): MatchState {
-        return this.set(state, 'ongoing', false)
+        return this.set(state, 'isOngoing', false)
     }
 
     static set<K extends keyof MatchState>(state: MatchState, key: K, value: MatchState[K]): MatchState {

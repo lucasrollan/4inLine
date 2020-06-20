@@ -17,6 +17,9 @@ export class Board {
     isFull(): boolean {
         return this.columns.every(column => column.discs.length === this.size.rows)
     }
+    isColumnEmpty(columnIndex: number): boolean {
+        return this.columns[columnIndex].discs.length === 0
+    }
     isColumnFull(columnIndex: number): boolean {
         return this.columns[columnIndex].discs.length === this.size.rows
     }
@@ -26,7 +29,16 @@ export class Board {
     getDiscCountInColumn(columnIndex: number): number {
         return this.columns[columnIndex].discs.length
     }
+    getTopRow(columnIndex: number): number {
+        return this.columns[columnIndex].discs.length - 1
+    }
     getDiscAt(columnIndex: number, row: number) {
         return this.columns[columnIndex].discs[row]
+    }
+    isWithinBoundaries(col: number, row: number): boolean {
+        if (row < 0 || row >= this.size.columns) {
+            return false
+        }
+        return col >= 0 && col < this.size.columns
     }
 }

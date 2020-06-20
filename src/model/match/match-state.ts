@@ -3,7 +3,7 @@ import { Board } from "../board"
 
 export interface MatchState {
     board: Board
-    ongoing: boolean
+    isOngoing: boolean
     currentTurnPlayer: Player
     winner: Player
 }
