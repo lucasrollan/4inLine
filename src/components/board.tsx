@@ -46,15 +46,15 @@ const Column = ({ col, rows, canDrop, onSelected }: ColumnProps) => <StyledColum
         )}
 </StyledColumn>
 
-export interface BoardComponentProps {
+export interface BoardProps {
     board: PresentationBoard
     onPerformAction: (columnIndex: number) => void
 }
 const StyledBoard = styled.div`
     display: flex;
 `
-// TODO: rename to Board
-export const BoardComponent = (props: BoardComponentProps) => (<div>
+
+export const Board = (props: BoardProps) => (<div>
     <StyledBoard>
         {props.board.columns.map((col, index) =>
             <Column

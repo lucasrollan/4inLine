@@ -2,15 +2,14 @@ import Logger from 'js-logger'
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { BoardComponent } from "./components/board";
+import { Board } from "./components/board";
 
 import { GameVariation, AgentType } from "./model";
 import { PresentationMatchState, startMatchRequest, performActionRequest } from "./presentation";
 
 Logger.useDefaults();
 
-// TODO: rename to Match
-class MatchComponent extends React.Component<{}, PresentationMatchState> {
+class Match extends React.Component<{}, PresentationMatchState> {
     constructor(props: {}) {
         super(props)
 
@@ -25,6 +24,7 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
     }
 
     componentDidMount() {
+        // TODO: take from UI
         startMatchRequest(GameVariation.connect4, AgentType.AI)
             .then(match =>
                 this.setState(match)
@@ -43,7 +43,7 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
     render() {
         return <div>
             {
-                this.state.board && <BoardComponent
+                this.state.board && <Board
                     board={this.state.board}
                     onPerformAction={(...args) => this.handlePerformAction(...args)}
                 />
@@ -55,6 +55,7 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
                     </div>
             }
             {
+                //TODO: make this more useful
                 !this.state.isOngoing && 'Game Over! '
             }
             {
@@ -66,7 +67,6 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
 
 ReactDOM.render(
     // TODO: make it SPA
-    <MatchComponent />,
-    // TODO: use another Id
-    document.getElementById("example")
+    <Match />,
+    document.getElementById("app")
 );

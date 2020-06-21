@@ -25,7 +25,7 @@ export const performAction = (match: Match, columnIndex: number): Match => {
         columnIndex,
     }
     Logger.log('performAction', match, action)
-    match.completeTurn(action)
+    match.takeTurn(action)
 
     match.attemptToRunAI()
 

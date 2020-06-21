@@ -29,11 +29,10 @@ export class Match {
         const ai = this.state.currentTurnPlayer.agent as AIAgent
         const action: PlayerAction = ai.getInput(this.state.board, this.state.currentTurnPlayer.disc, this.gameVariation)
         
-        this.completeTurn(action)
+        this.takeTurn(action)
     }
 
-    // TODO: rename to takeTurn
-    completeTurn(action: PlayerAction): void {
+    takeTurn(action: PlayerAction): void {
         if (this.state.isOngoing && GameRules.isActionAllowed(this.state.board, action)) {
             this.state = MatchStateUpdater.performAction(this.state, action)
             Logger.log('action was performed', this.state)

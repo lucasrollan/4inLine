@@ -37,10 +37,7 @@ export class Board {
         return this.columns[columnIndex].discs[row]
     }
     isWithinBoundaries(col: number, row: number): boolean {
-        // TODO: make single return
-        if (row < 0 || row >= this.size.columns) {
-            return false
-        }
-        return col >= 0 && col < this.size.columns
+        return row >= 0 && row < this.size.rows
+            && col >= 0 && col < this.size.columns
     }
 }
