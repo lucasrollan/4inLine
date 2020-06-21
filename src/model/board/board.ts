@@ -2,7 +2,6 @@ import { BoardColumn } from "./board-column"
 import { PlayerAction } from "../player"
 import { BoardActionPerformer } from "./board-action-performer"
 
-// TODO: separate file
 export interface BoardSize {
     columns: number
     rows: number
@@ -25,7 +24,7 @@ export class Board {
         return this.columns[columnIndex].discs.length === this.size.rows
     }
     dropDisc(action: PlayerAction): Board {
-        return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
+        return BoardActionPerformer.dropDisc(this, action.columnIndex, action.discColor)
     }
     getDiscCountInColumn(columnIndex: number): number {
         return this.columns[columnIndex].discs.length

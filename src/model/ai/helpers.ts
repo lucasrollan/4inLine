@@ -1,8 +1,13 @@
+import { isNumber } from 'lodash'
+import { DiscColor } from '../disc'
+
 export function getIndexOfHighest(numbers: number[] = []): number {
     let highest = -Infinity
     let index = -1
     for(let i=0; i<numbers.length; i += 1) {
-        if (numbers[i] > highest) {
+        const number = numbers[i]
+        if (isNumber(number) && number > highest) {
+            highest = number
             index = i
         }
     }
@@ -11,18 +16,19 @@ export function getIndexOfHighest(numbers: number[] = []): number {
 }
 
 export function average(numbers: number[] = []): number {
-    if (numbers.length === 0) {
-        return 0
+    let length = 0
+    let sum = 0
+
+    for(let n of numbers) {
+        if (isNumber(n)) {
+            length += 1
+            sum += n
+        }
     }
 
-    return add(...numbers) / numbers.length
+    return length && sum / length
 }
 
-export function add(...numbers: number[]): number {
-    let sum = 0
-    for(let n of numbers) {
-        sum += n
-    }
-
-    return sum
+export function getOpponentDiscColor(discColor: DiscColor): DiscColor {
+    return discColor === DiscColor.primary ? DiscColor.secondary : DiscColor.primary
 }

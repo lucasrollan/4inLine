@@ -3,6 +3,7 @@ import { PlayerAction } from "../player"
 import { GameRules, GameVariation } from "../game-rules"
 import Logger from "js-logger"
 import { getIndexOfHighest, average } from "./helpers"
+import { COLLUMN_NOT_ALLOWED } from './constants'
 
 export default class AI {
     static ratingActionsDepth = 4
@@ -13,9 +14,10 @@ export default class AI {
         }
     
         const avaliableActions = this.rateAvailableActions(board, disc, gameVariation, this.ratingActionsDepth)
-        Logger.info('Available actions', avaliableActions)
+        const highestRatedAction = getIndexOfHighest(avaliableActions)
+        Logger.info('Available actions:', avaliableActions, 'highest:', highestRatedAction)
     
-        return { columnIndex: getIndexOfHighest(avaliableActions) }
+        return { columnIndex: highestRatedAction }
     }
 
     private static rateAvailableActions(board: Board, disc: DiscColor, gameVariation: GameVariation, depth: number): number[] {
@@ -24,26 +26,24 @@ export default class AI {
         for(let i = 0; i < columnCount; i += 1) {
             const action: PlayerAction = {
                 columnIndex: i,
-                disc: disc,
+                discColor: disc,
             }
+            let rating: number = COLLUMN_NOT_ALLOWED
             if (GameRules.isActionAllowed(board, action)) {
                 const boardToRate = board.dropDisc(action)
-    
-                let rating = 0
+
                 if (GameRules.isWinningAction(boardToRate, action, gameVariation)) {
                     rating = 1
                 } else if (depth > 0) {
-                    const opponentDisc = action.disc === DiscColor.primary ? DiscColor.secondary : DiscColor.primary
+                    const opponentDisc = action.discColor === DiscColor.primary ? DiscColor.secondary : DiscColor.primary
                     const opponentActionRatings = this.rateAvailableActions(boardToRate, opponentDisc, gameVariation, depth - 1)
     
                     rating = -average(opponentActionRatings)
-                }
-    
-                ratings = ratings.concat(rating)
-                if (rating === 1) {
-                    break
+                } else {
+                    rating = 0
                 }
             }
+            ratings = ratings.concat(rating)
         }
     
         return ratings

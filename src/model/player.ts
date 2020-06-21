@@ -11,5 +11,5 @@ export interface Player {
 // TODO: needed?
 export interface PlayerAction {
     columnIndex: number
-    disc?: DiscColor
+    discColor?: DiscColor
 }

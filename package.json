@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "js-logger": "^1.6.0",
+    "lodash": "^4.17.15",
     "q": "^1.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -23,6 +24,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.155",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
