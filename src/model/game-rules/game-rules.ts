@@ -33,55 +33,29 @@ export class GameRules {
     }
 
     static isWinningAction(board: Board, action: PlayerAction, gameVariation: GameVariation): boolean {
-        return this.isLine(board, action.columnIndex, gameVariation)
-    }
-
-    static isLine(board: Board, colIndex: number, gameVariation: GameVariation): boolean {
+        const columnIndex = action.columnIndex
         const lineLength = gameVariationRuleset[gameVariation].lineObjective
 
-        return this.isVerticalLine(board, colIndex, lineLength)
-            || this.isHorizontalLine(board, colIndex, lineLength)
-            || this.isAscendingDiagonalLine(board, colIndex, lineLength)
-            || this.isDescendingDiagonalLine(board, colIndex, lineLength)
+        return this.hasLineOfLength(board, columnIndex, lineLength, direction.vertical)
+            || this.hasLineOfLength(board, columnIndex, lineLength, direction.horizontal)
+            || this.hasLineOfLength(board, columnIndex, lineLength, direction.ascending)
+            || this.hasLineOfLength(board, columnIndex, lineLength, direction.descending)
     }
 
-    // TODO: use Direction.vertical and spare these functions
-    static isVerticalLine(board: Board, colIndex: number, lineLength: number): boolean {
-        const length = this.checkLineLength(board, colIndex, lineLength, Direction.NONE, Direction.DOWN)
-
-        return length >= lineLength
-    }
-
-    static isHorizontalLine(board: Board, colIndex: number, lineLength: number): boolean {
-        const length = this.checkLineLength(board, colIndex, lineLength, Direction.RIGTH, Direction.NONE)
-
-        return length >= lineLength
-    }
-
-    static isAscendingDiagonalLine(board: Board, colIndex: number, lineLength: number): boolean {
-        const length = this.checkLineLength(board, colIndex, lineLength, Direction.RIGTH, Direction.UP)
-
-        return length >= lineLength
-    }
-
-    static isDescendingDiagonalLine(board: Board, colIndex: number, lineLength: number): boolean {
-        const length = this.checkLineLength(board, colIndex, lineLength, Direction.RIGTH, Direction.DOWN)
-
-        return length >= lineLength
-    }
-
-    static checkLineLength(board: Board, colIndex: number, lineLength: number, horizontalDirection: Direction, verticalDirection: Direction): number {
+    static hasLineOfLength(board: Board, colIndex: number, lineLength: number, direction: Direction): boolean {
         if (board.isColumnEmpty(colIndex)) {
-            return 0
+            return false
         }
 
         const topRow = board.getTopRow(colIndex)
         const playerDisc = board.getDiscAt(colIndex, topRow)
+        const oppositeDirection = [-direction[0], -direction[1]] as Direction
 
+        const length = 1
+            + this.countDiscsInDirection(board, colIndex, topRow, lineLength, direction, playerDisc)
+            + this.countDiscsInDirection(board, colIndex, topRow, lineLength, oppositeDirection, playerDisc)
 
-        return 1
-            + this.countDiscsInDirection(board, colIndex, topRow, lineLength, horizontalDirection, verticalDirection, playerDisc)
-            + this.countDiscsInDirection(board, colIndex, topRow, lineLength, -horizontalDirection, -verticalDirection, playerDisc)
+        return length >= lineLength
     }
 
     static countDiscsInDirection(
@@ -89,16 +63,15 @@ export class GameRules {
         colIndex: number,
         row: number,
         lineLength: number,
-        horizontalDirection: Direction,
-        verticalDirection: Direction,
+        direction: Direction,
         disc: Disc
     ) {
         let count = 0
 
         for (
-            let i = colIndex + horizontalDirection, j = row + verticalDirection;
+            let i = colIndex + direction[0], j = row + direction[1];
             length < lineLength && board.isWithinBoundaries(i, j);
-            i += horizontalDirection, j += verticalDirection
+            i += direction[0], j += direction[1]
         ) {
             if (board.getDiscAt(i, j) !== disc) {
                 break
@@ -110,10 +83,10 @@ export class GameRules {
     }
 }
 
-enum Direction {
-    UP = 1,
-    DOWN = -1,
-    RIGTH = 1,
-    LEFT = -1,
-    NONE = 0,
+type Direction = [number, number]
+const direction = {
+    horizontal: [1, 0] as Direction,
+    vertical: [0, -1] as Direction,
+    ascending: [1, 1] as Direction,
+    descending: [1, -1] as Direction,
 }
