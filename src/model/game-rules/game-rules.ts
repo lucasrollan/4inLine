@@ -43,25 +43,25 @@ export class GameRules {
                 board,
                 columnIndex,
                 lineLength,
-                direction.vertical
+                directions.vertical
             ) ||
             this.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
-                direction.horizontal
+                directions.horizontal
             ) ||
             this.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
-                direction.ascending
+                directions.ascending
             ) ||
             this.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
-                direction.descending
+                directions.descending
             )
         )
     }
@@ -127,8 +127,8 @@ export class GameRules {
     }
 }
 
-type Direction = [number, number]
-const direction = {
+export type Direction = [number, number]
+export const directions = {
     horizontal: [1, 0] as Direction,
     vertical: [0, -1] as Direction,
     ascending: [1, 1] as Direction,

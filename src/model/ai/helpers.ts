@@ -4,9 +4,9 @@ export function getIndexOfHighest(numbers: number[] = []): number {
     let highest = -Infinity
     let index = -1
     for (let i = 0; i < numbers.length; i += 1) {
-        const number = numbers[i]
-        if (isNumber(number) && number > highest) {
-            highest = number
+        const n = numbers[i]
+        if (isNumber(n) && n > highest) {
+            highest = n
             index = i
         }
     }
@@ -18,7 +18,7 @@ export function average(numbers: number[] = []): number {
     let length = 0
     let sum = 0
 
-    for (let n of numbers) {
+    for (const n of numbers) {
         if (isNumber(n)) {
             length += 1
             sum += n

@@ -46,7 +46,7 @@ export class AI {
         for (let i = 0; i < columnCount; i += 1) {
             const action: PlayerAction = {
                 columnIndex: i,
-                disc: disc,
+                disc,
             }
             let rating: number = COLLUMN_NOT_ALLOWED
             if (GameRules.isActionAllowed(board, action)) {

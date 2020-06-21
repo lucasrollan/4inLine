@@ -1,5 +1,5 @@
 import { BoardFactory } from '../board'
-import { GameRules } from './game-rules'
+import { GameRules, directions } from './game-rules'
 import { Disc } from '../disc'
 import { MatchFactory } from '../match'
 import { GameVariation } from './variations'
@@ -120,10 +120,12 @@ describe('GameRules', () => {
                     [X, X, X, X, X],
                     [],
                 ])
-                const hasLine = GameRules.hasLineOfLength(boardMock, 3, 4, [
-                    0,
-                    -1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    3,
+                    4,
+                    directions.vertical
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -136,10 +138,12 @@ describe('GameRules', () => {
                     [],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 3, 5, [
-                    0,
-                    -1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    3,
+                    5,
+                    directions.vertical
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -152,10 +156,12 @@ describe('GameRules', () => {
                     [],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 0, 4, [
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
                     0,
-                    -1,
-                ])
+                    4,
+                    directions.vertical
+                )
 
                 expect(hasLine).toBe(false)
             })
@@ -170,10 +176,12 @@ describe('GameRules', () => {
                     [X, O, O, O],
                     [X],
                 ])
-                const hasLine = GameRules.hasLineOfLength(boardMock, 2, 4, [
-                    1,
-                    0,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    2,
+                    4,
+                    directions.horizontal
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -186,10 +194,12 @@ describe('GameRules', () => {
                     [X],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 2, 5, [
-                    1,
-                    0,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    2,
+                    5,
+                    directions.horizontal
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -202,10 +212,12 @@ describe('GameRules', () => {
                     [X],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 0, 4, [
-                    1,
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
                     0,
-                ])
+                    4,
+                    directions.horizontal
+                )
 
                 expect(hasLine).toBe(false)
             })
@@ -220,10 +232,12 @@ describe('GameRules', () => {
                     [X, O, O, O],
                     [X],
                 ])
-                const hasLine = GameRules.hasLineOfLength(boardMock, 2, 4, [
-                    1,
-                    1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    2,
+                    4,
+                    directions.ascending
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -236,10 +250,12 @@ describe('GameRules', () => {
                     [X, O, O, O, O],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 2, 5, [
-                    1,
-                    1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    2,
+                    5,
+                    directions.ascending
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -252,10 +268,12 @@ describe('GameRules', () => {
                     [X],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 4, 4, [
-                    1,
-                    1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    4,
+                    4,
+                    directions.ascending
+                )
 
                 expect(hasLine).toBe(false)
             })
@@ -269,10 +287,12 @@ describe('GameRules', () => {
                     [X, O, O, O],
                     [X],
                 ])
-                const hasLine = GameRules.hasLineOfLength(boardMock, 0, 4, [
-                    1,
-                    -1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    0,
+                    4,
+                    directions.descending
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -285,10 +305,12 @@ describe('GameRules', () => {
                     [X, O, O, O],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 0, 5, [
-                    1,
-                    -1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    0,
+                    5,
+                    directions.descending
+                )
 
                 expect(hasLine).toBe(true)
             })
@@ -301,10 +323,12 @@ describe('GameRules', () => {
                     [X],
                 ])
 
-                const hasLine = GameRules.hasLineOfLength(boardMock, 4, 4, [
-                    1,
-                    -1,
-                ])
+                const hasLine = GameRules.hasLineOfLength(
+                    boardMock,
+                    4,
+                    4,
+                    directions.descending
+                )
 
                 expect(hasLine).toBe(false)
             })
