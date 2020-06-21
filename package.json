@@ -7,9 +7,10 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "test": "jest",
-    "format:check": "prettier --check src/",
+    "format": "prettier --check src/",
     "format:write": "prettier --write src/",
-    "lint": "tslint 'src/**/*.ts'"
+    "lint": "tslint 'src/**/*.ts'",
+    "lint:fix": "tslint  --fix 'src/**/*.ts'"
   },
   "author": "",
   "license": "ISC",

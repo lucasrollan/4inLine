@@ -18,11 +18,11 @@ export class AI {
             return { columnIndex: Math.floor(board.size.columns / 2) }
         }
 
-        const avaliableActions = this.rateAvailableActions(
+        const avaliableActions = AI.rateAvailableActions(
             board,
             disc,
             gameVariation,
-            this.ratingActionsDepth
+            AI.ratingActionsDepth
         )
         const highestRatedAction = getIndexOfHighest(avaliableActions)
         Logger.info(
@@ -62,7 +62,7 @@ export class AI {
                     rating = 1
                 } else if (depth > 0) {
                     const opponentDisc = getOpponentDisc(action.disc)
-                    const opponentActionRatings = this.rateAvailableActions(
+                    const opponentActionRatings = AI.rateAvailableActions(
                         boardToRate,
                         opponentDisc,
                         gameVariation,

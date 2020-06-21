@@ -39,25 +39,25 @@ export class GameRules {
         const lineLength = gameVariationRuleset[gameVariation].lineObjective
 
         return (
-            this.hasLineOfLength(
+            GameRules.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
                 directions.vertical
             ) ||
-            this.hasLineOfLength(
+            GameRules.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
                 directions.horizontal
             ) ||
-            this.hasLineOfLength(
+            GameRules.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
                 directions.ascending
             ) ||
-            this.hasLineOfLength(
+            GameRules.hasLineOfLength(
                 board,
                 columnIndex,
                 lineLength,
@@ -82,7 +82,7 @@ export class GameRules {
 
         const length =
             1 +
-            this.countDiscsInDirection(
+            GameRules.countDiscsInDirection(
                 board,
                 colIndex,
                 topRow,
@@ -90,7 +90,7 @@ export class GameRules {
                 direction,
                 playerDisc
             ) +
-            this.countDiscsInDirection(
+            GameRules.countDiscsInDirection(
                 board,
                 colIndex,
                 topRow,

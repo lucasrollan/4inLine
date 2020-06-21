@@ -9,8 +9,8 @@ export class PresentationTranslator {
     static translateFromDomain(match: Match): PresentationMatchState {
         return {
             matchId: match.id,
-            board: this.transformBoard(match.state.board),
-            players: this.transformPlayers(match.players),
+            board: PresentationTranslator.transformBoard(match.state.board),
+            players: PresentationTranslator.transformPlayers(match.players),
             currentPlayer: match.state.currentTurnPlayer,
             isOngoing: match.state.isOngoing,
             winner: match.state.winner,

@@ -5,7 +5,9 @@
     ],
     "jsRules": {},
     "rules": {
-        "typedef": [true, "call-signature"]
+        "typedef": [true, "call-signature"],
+        "static-this": true,
+        "invalid-void": true
     },
     "rulesDirectory": []
 }

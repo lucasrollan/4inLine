@@ -10,7 +10,7 @@ export class MatchFactory {
         const match = new Match(matchId, gameVariation)
         match.players = [opponent, PlayerType.Human]
 
-        match.state = this.buildMatchState(match)
+        match.state = MatchFactory.buildMatchState(match)
 
         return match
     }
