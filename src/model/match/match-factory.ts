@@ -1,7 +1,7 @@
 import { GameVariation, GameRules } from "../game-rules"
-import { Agent, AgentType } from "../agent"
+import { AgentType } from "../player"
+import { BoardFactory } from "../board"
 import { Match } from "./match"
-import { Disc, BoardFactory } from "../board"
 import { MatchState } from "./match-state"
 
 export class MatchFactory {

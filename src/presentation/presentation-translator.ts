@@ -1,4 +1,4 @@
-import { Disc, Board, Player, Match, AgentType, GameRules } from "../model";
+import { Board, Match, AgentType, GameRules } from "../model";
 import { PresentationMatchState, PresentationPlayer, PresentationBoard } from "./presentation-match-state";
 
 export class PresentationTranslator {

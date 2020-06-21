@@ -1,5 +1,5 @@
 import Logger from 'js-logger'
-import { Match, MatchFactory, Agent, AgentType, PlayerAction, GameVariation } from './model'
+import { Match, MatchFactory, AgentType, PlayerAction, GameVariation } from './model'
 
 export const startMatch = (gameVariation: GameVariation, opponent: AgentType): Match => {
     const match = MatchFactory.build(gameVariation, opponent)
