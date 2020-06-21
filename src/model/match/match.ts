@@ -14,7 +14,6 @@ export class Match {
 
     constructor(public id: string, public gameVariation: GameVariation) {}
 
-    // TODO: add prettier
     attemptToRunAI() {
         if (
             this.state.isOngoing &&
