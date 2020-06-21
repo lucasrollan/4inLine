@@ -15,6 +15,7 @@ export class Match {
         public gameVariation: GameVariation
     ) {}
 
+    // TODO: add prettier
     attemptToRunAI() {
         if (
             this.state.isOngoing
@@ -31,6 +32,7 @@ export class Match {
         this.completeTurn(action)
     }
 
+    // TODO: rename to takeTurn
     completeTurn(action: PlayerAction): void {
         if (this.state.isOngoing && GameRules.isActionAllowed(this.state.board, action)) {
             this.state = MatchStateUpdater.performAction(this.state, action)

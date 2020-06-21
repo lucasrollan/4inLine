@@ -9,6 +9,7 @@ import { PresentationMatchState, startMatchRequest, performActionRequest } from 
 
 Logger.useDefaults();
 
+// TODO: rename to Match
 class MatchComponent extends React.Component<{}, PresentationMatchState> {
     constructor(props: {}) {
         super(props)
@@ -64,6 +65,8 @@ class MatchComponent extends React.Component<{}, PresentationMatchState> {
 }
 
 ReactDOM.render(
+    // TODO: make it SPA
     <MatchComponent />,
+    // TODO: use another Id
     document.getElementById("example")
 );

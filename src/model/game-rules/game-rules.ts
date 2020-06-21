@@ -40,6 +40,7 @@ export class GameRules {
             || this.isDescendingDiagonalLine(board, colIndex, lineLength)
     }
 
+    // TODO: use Direction.vertical and spare these functions
     static isVerticalLine(board: Board, colIndex: number, lineLength: number): boolean {
         const length = this.checkLineLength(board, colIndex, lineLength, Direction.NONE, Direction.DOWN)
 

@@ -2,6 +2,7 @@ import { BoardColumn } from "./board-column"
 import { PlayerAction } from "../player"
 import { BoardActionPerformer } from "./board-action-performer"
 
+// TODO: separate file
 export interface BoardSize {
     columns: number
     rows: number
@@ -36,6 +37,7 @@ export class Board {
         return this.columns[columnIndex].discs[row]
     }
     isWithinBoundaries(col: number, row: number): boolean {
+        // TODO: make single return
         if (row < 0 || row >= this.size.columns) {
             return false
         }

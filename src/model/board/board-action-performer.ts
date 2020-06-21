@@ -2,6 +2,7 @@ import { BoardFactory } from "./board-factory"
 import { Board } from "./board"
 import { Disc } from "../disc"
 
+// TODO: performer?
 export class BoardActionPerformer {
     static dropDisc(board: Board, columnIndex: number, disc?: Disc): Board {
         const column = board.columns[columnIndex]

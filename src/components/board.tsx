@@ -6,6 +6,7 @@ import { PresentationBoard } from "../presentation";
 
 const size = 70;
 
+// TODO: separate components
 interface DiscProps { disc: Disc }
 const StyledDisc = styled.div`
     height: ${size}px;
@@ -28,6 +29,8 @@ const StyledColumn = styled.div`
     display: flex;
     flex-direction: column-reverse;
 `
+
+// TODO: use
 const StyledDropIndicator = styled(StyledDisc)`
     visibility: hidden;
     ${StyledColumn}:hover & {
@@ -50,6 +53,7 @@ export interface BoardComponentProps {
 const StyledBoard = styled.div`
     display: flex;
 `
+// TODO: rename to Board
 export const BoardComponent = (props: BoardComponentProps) => (<div>
     <StyledBoard>
         {props.board.columns.map((col, index) =>

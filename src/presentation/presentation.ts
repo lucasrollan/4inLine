@@ -6,6 +6,7 @@ import Logger from "js-logger";
 // TODO: save and retrieve by ID
 let match: Match
 
+// TODO: make express.js api
 export function startMatchRequest(gameVariation: GameVariation, secondPlayer: AgentType): Promise<PresentationMatchState> {
     const promise = new Promise<PresentationMatchState>((resolve, reject) => {
         match = startMatch(gameVariation, secondPlayer)

@@ -2,6 +2,7 @@ import Logger from 'js-logger'
 import { Match, MatchFactory, Agent, HumanAgent, AgentType, PlayerAction, AIAgent, GameVariation } from './model'
 
 export const startMatch = (gameVariation: GameVariation, secondPlayer: AgentType): Match => {
+    // TODO: move this to match factory or game rules
     const secondAgent = secondPlayer === AgentType.Human
         ? new HumanAgent()
         : new AIAgent()

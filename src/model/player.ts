@@ -8,6 +8,7 @@ export interface Player {
     disc: Disc
 }
 
+// TODO: needed?
 export interface PlayerAction {
     columnIndex: number
     disc?: Disc

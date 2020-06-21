@@ -5,6 +5,7 @@ import Logger from "js-logger"
 
 const ratingActionsDepth = 4
 
+// TODO: make a service
 export function getInput(board: Board, disc: Disc, gameVariation: GameVariation): PlayerAction {
     if (board.isEmpty()) {
         return {
@@ -57,7 +58,9 @@ function rateAvailableActions(board: Board, disc: Disc, gameVariation: GameVaria
                 const opponentDisc = action.disc === Disc.A ? Disc.B : Disc.A
                 const opponentActionRatings = rateAvailableActions(boardToRate, opponentDisc, gameVariation, depth - 1)
 
+                // TODO: return an array of numbers and spare this function
                 rating = -averageRating(opponentActionRatings)
+                // TODO: spare this function
                 actionsConsidered += sumActionsConsidered(opponentActionRatings)
             }
 

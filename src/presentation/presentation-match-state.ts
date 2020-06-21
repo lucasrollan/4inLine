@@ -1,5 +1,6 @@
 import { Disc, Board, Player, AgentType, Match, BoardSize } from "../model";
 
+// TODO: move all to separate files
 export interface PresentationBoard {
     columns: Disc[][]
     size: BoardSize
