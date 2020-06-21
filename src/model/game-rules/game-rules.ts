@@ -1,9 +1,18 @@
-import { Board, Disc } from "../board"
+import { Board } from "../board"
+import { Disc } from "../disc"
 import { PlayerAction } from "../player"
 import { Match } from "../match"
 import { GameVariation, gameVariationRuleset, gameVariationStartingBoard } from "./variations"
 
 export class GameRules {
+    static isActionAllowed(board: Board, action: PlayerAction): boolean {
+        return !board.isColumnFull(action.columnIndex)
+    }
+
+    static getNextPlayer(match: Match): number {
+        return match.state.currentTurnPlayer === 0 ? 1 : 0
+    }
+
     static getVariationGridSize(gameVariation: GameVariation) {
         return gameVariationRuleset[gameVariation].boardSize
     }
@@ -11,16 +20,6 @@ export class GameRules {
     static getVariationInitialBoard(gameVariation: GameVariation): Disc[][] {
         if (gameVariationStartingBoard[gameVariation])
         return gameVariationStartingBoard[gameVariation]
-    }
-
-    static isActionAllowed(board: Board, action: PlayerAction): boolean {
-        return !board.isColumnFull(action.columnIndex)
-    }
-
-    static getNextPlayer(match: Match): number {
-        return match.state.currentTurnPlayer === 0
-            ? 1
-            : 0
     }
 
     static isDraw(board: Board): boolean {

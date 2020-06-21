@@ -1,5 +1,5 @@
 import { Ruleset } from "./ruleset";
-import { Disc } from "../board";
+import { Disc } from "../disc";
 
 export enum GameVariation {
     connect4 = 'CONNECT_4',

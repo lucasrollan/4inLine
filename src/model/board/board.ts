@@ -11,7 +11,7 @@ export class Board {
     columns: Disc[][]
     constructor (public size: BoardSize) {}
 
-    isEmpty() {
+    isEmpty(): boolean {
         return this.columns.every(column => column.length === 0)
     }
     isFull(): boolean {
@@ -29,8 +29,8 @@ export class Board {
     getTopRow(columnIndex: number): number {
         return this.columns[columnIndex].length - 1
     }
-    getDiscAt(columnIndex: number, row: number) {
-        return this.columns[columnIndex][row]
+    getDiscAt(columnIndex: number, row: number): Disc {
+        return this.columns[columnIndex][row] || null
     }
     isWithinBoundaries(col: number, row: number): boolean {
         return row >= 0 && row < this.size.rows

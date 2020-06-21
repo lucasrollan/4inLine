@@ -23,10 +23,14 @@ export class Match {
             this.state.isOngoing
             && this.players[this.state.currentTurnPlayer] === PlayerType.AI
         ) {
-            const playerDisc = getPlayerDisc(this.state.currentTurnPlayer)
-            const action: PlayerAction = AI.getInput(this.state.board, playerDisc, this.gameVariation)
-            this.takeTurn(action)
+            this.runAI()
         }
+    }
+
+    runAI(): void {
+        const playerDisc = getPlayerDisc(this.state.currentTurnPlayer)
+        const action: PlayerAction = AI.getInput(this.state.board, playerDisc, this.gameVariation)
+        this.takeTurn(action)
     }
 
     takeTurn(action: PlayerAction): void {
@@ -46,10 +50,12 @@ export class Match {
                 this.updateState({
                     isOngoing: false,
                 })
+            } else {
+                const nextPlayer = GameRules.getNextPlayer(this)
+                this.updateState({
+                    currentTurnPlayer: nextPlayer,
+                })
             }
-
-            const nextPlayer = GameRules.getNextPlayer(this)
-            this.state = {...this.state, currentTurnPlayer: nextPlayer}
         }
     }
 

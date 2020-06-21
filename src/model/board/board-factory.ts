@@ -7,7 +7,7 @@ export class BoardFactory {
         board.columns = []
         for(let i = 0; i<size.columns; i++) {
             let column: Disc[] = []
-            if(initialBoard) {
+            if(initialBoard && initialBoard[i]) {
                 column = [ ...initialBoard[i] ]
             }
             board.columns = [

@@ -6,34 +6,36 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "build2": "browserify ./src/browser.js -o ./dist/main.js",
-    "watch2": "watchify ./src/browser.js -o ./dist/main.js",
-    "start2": "node ./src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "js-logger": "^1.6.0",
     "lodash": "^4.17.15",
-    "q": "^1.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "readline-sync": "^1.4.1",
-    "styled-components": "^5.1.1",
-    "underscore": "^1.8.3"
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.155",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
-    "browserify": "^13.0.0",
+    "jest": "^26.0.1",
     "source-map-loader": "^1.0.0",
+    "ts-jest": "^26.1.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
-    "watchify": "^3.7.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": ["ts", "tsx", "js"]
   }
 }

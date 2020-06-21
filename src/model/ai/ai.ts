@@ -1,4 +1,5 @@
-import { Board, Disc } from "../board"
+import { Board } from "../board"
+import { Disc, getOpponentDisc } from "../disc"
 import { PlayerAction } from "../player"
 import { GameRules, GameVariation } from "../game-rules"
 import Logger from "js-logger"
@@ -20,7 +21,7 @@ export class AI {
         return { columnIndex: highestRatedAction }
     }
 
-    private static rateAvailableActions(board: Board, disc: Disc, gameVariation: GameVariation, depth: number): number[] {
+    static rateAvailableActions(board: Board, disc: Disc, gameVariation: GameVariation, depth: number): number[] {
         let ratings: number[] = []
         const columnCount = board.size.columns
         for(let i = 0; i < columnCount; i += 1) {
@@ -35,7 +36,7 @@ export class AI {
                 if (GameRules.isWinningAction(boardToRate, action, gameVariation)) {
                     rating = 1
                 } else if (depth > 0) {
-                    const opponentDisc = action.disc === Disc.primary ? Disc.secondary : Disc.primary
+                    const opponentDisc = getOpponentDisc(action.disc)
                     const opponentActionRatings = this.rateAvailableActions(boardToRate, opponentDisc, gameVariation, depth - 1)
     
                     rating = -average(opponentActionRatings)
