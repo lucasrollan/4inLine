@@ -5,6 +5,7 @@ import { MatchStateUpdater } from "./match-state-updater"
 import { AgentType, AIAgent } from "../agent"
 import { GameRules } from "../game-rules"
 import Logger from "js-logger"
+import AI from "../ai/ai"
 
 export class Match {
     players: [Player, Player]
@@ -21,15 +22,9 @@ export class Match {
             this.state.isOngoing
             && this.state.currentTurnPlayer.agent.type === AgentType.AI
         ) {
-            this.runAITurn()
+            const action: PlayerAction = AI.getInput(this.state.board, this.state.currentTurnPlayer.disc, this.gameVariation)
+            this.takeTurn(action)
         }
-    }
-
-    runAITurn(): void {
-        const ai = this.state.currentTurnPlayer.agent as AIAgent
-        const action: PlayerAction = ai.getInput(this.state.board, this.state.currentTurnPlayer.disc, this.gameVariation)
-        
-        this.takeTurn(action)
     }
 
     takeTurn(action: PlayerAction): void {
