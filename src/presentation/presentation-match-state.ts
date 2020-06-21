@@ -1,4 +1,4 @@
-import { Disc, AgentType, BoardSize } from "../model";
+import { Disc, PlayerType, BoardSize } from "../model";
 
 export interface PresentationBoard {
     columns: Disc[][]
@@ -6,7 +6,7 @@ export interface PresentationBoard {
 }
 export interface PresentationPlayer {
     name: string,
-    type: AgentType,
+    type: PlayerType,
     disc: Disc,
 }
 export interface PresentationMatchState {

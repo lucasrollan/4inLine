@@ -1,4 +1,4 @@
-import { Board, Match, AgentType, GameRules } from "../model";
+import { Board, Match, PlayerType, GameRules } from "../model";
 import { PresentationMatchState, PresentationPlayer, PresentationBoard } from "./presentation-match-state";
 
 export class PresentationTranslator {
@@ -13,13 +13,13 @@ export class PresentationTranslator {
         })
     }
 
-    static transformPlayers(players: AgentType[]): PresentationPlayer[] {
+    static transformPlayers(players: PlayerType[]): PresentationPlayer[] {
         const presentationPlayers = players.map((type, index) => ({
             type,
-            name: type === AgentType.AI ? 'AI' : 'Player 1',
+            name: type === PlayerType.AI ? 'AI' : 'Player 1',
             disc: GameRules.getPlayerDisc(index)
         }))
-        if (players[1] === AgentType.Human) {
+        if (players[1] === PlayerType.Human) {
             presentationPlayers[1].name = 'Player 2'
         }
         

@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 
 import { Board } from "./components/board";
 
-import { GameVariation, AgentType } from "./model";
+import { GameVariation, PlayerType } from "./model";
 import { PresentationMatchState, startMatchRequest, performActionRequest } from "./presentation";
 import { DISC_COLORS } from './components/constants';
 
@@ -26,7 +26,7 @@ class Match extends React.Component<{}, PresentationMatchState> {
 
     componentDidMount() {
         // TODO: take from UI
-        startMatchRequest(GameVariation.connect4, AgentType.AI)
+        startMatchRequest(GameVariation.connect4, PlayerType.AI)
             .then(match =>
                 this.setState(match)
             )

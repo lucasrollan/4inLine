@@ -1,16 +1,16 @@
 import { GameVariation, GameRules } from "../game-rules"
-import { AgentType } from "../player"
+import { PlayerType } from "../player"
 import { BoardFactory } from "../board"
 import { Match } from "./match"
 import { MatchState } from "./match-state"
 
 export class MatchFactory {
-    static build(gameVariation: GameVariation, opponent: AgentType): Match {
+    static build(gameVariation: GameVariation, opponent: PlayerType): Match {
         const matchId = Date.now().toString()
         const match = new Match(matchId, gameVariation)
         match.players = [
             opponent,
-            AgentType.Human
+            PlayerType.Human
         ]
 
         match.state = this.buildMatchState(match)
