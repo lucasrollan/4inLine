@@ -31,17 +31,32 @@ export class Match {
 
     takeTurn(action: PlayerAction): void {
         if (this.state.isOngoing && GameRules.isActionAllowed(this.state.board, action)) {
-            this.state = MatchStateUpdater.performAction(this.state, action)
+            const boardAction = {...action, disc: GameRules.getPlayerDisc(this.state.currentTurnPlayer)}
+            this.updateState({
+                board: this.state.board.dropDisc(boardAction)
+            })
             Logger.log('action was performed', this.state)
 
             if(GameRules.isWinningAction(this.state.board, action, this.gameVariation)) {
-                this.state = MatchStateUpdater.gameWon(this.state)
+                this.updateState({
+                    winner: this.state.currentTurnPlayer,
+                    isOngoing: false,
+                })
             } else if (GameRules.isDraw(this.state.board)) {
-                this.state = MatchStateUpdater.gameDraw(this.state)
+                this.updateState({
+                    isOngoing: false,
+                })
             }
 
             const nextPlayer = GameRules.getNextPlayer(this)
-            this.state = MatchStateUpdater.setCurrentTurnPlayer(this.state, nextPlayer)
+            this.state = {...this.state, currentTurnPlayer: nextPlayer}
+        }
+    }
+
+    private updateState(newState: Partial<MatchState>): void {
+        this.state = {
+            ...this.state,
+            ...newState,
         }
     }
 }

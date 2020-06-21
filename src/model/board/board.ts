@@ -1,6 +1,6 @@
 import { PlayerAction } from "../player"
-import { BoardActionPerformer } from "./board-action-performer"
 import { Disc } from "../disc"
+import { BoardFactory } from "./board-factory"
 
 export interface BoardSize {
     columns: number
@@ -23,9 +23,6 @@ export class Board {
     isColumnFull(columnIndex: number): boolean {
         return this.columns[columnIndex].length === this.size.rows
     }
-    dropDisc(action: PlayerAction): Board {
-        return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
-    }
     getDiscCountInColumn(columnIndex: number): number {
         return this.columns[columnIndex].length
     }
@@ -38,5 +35,15 @@ export class Board {
     isWithinBoundaries(col: number, row: number): boolean {
         return row >= 0 && row < this.size.rows
             && col >= 0 && col < this.size.columns
+    }
+    dropDisc(action: PlayerAction): Board {
+        const column = this.columns[action.columnIndex]
+        const newColumn: Disc[] = [...column, action.disc]
+
+        const nextBoard = BoardFactory.build(this.size)
+        nextBoard.columns = [ ...this.columns ]
+        nextBoard.columns[action.columnIndex] = newColumn
+
+        return nextBoard
     }
 }
