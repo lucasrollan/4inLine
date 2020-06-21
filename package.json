@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "test": "jest"
+    "test": "jest",
+    "format:check": "prettier --check src/",
+    "format:write": "prettier --write src/"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +26,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
     "jest": "^26.0.1",
+    "prettier": "2.0.5",
     "source-map-loader": "^1.0.0",
     "ts-jest": "^26.1.0",
     "ts-loader": "^7.0.5",
@@ -36,6 +39,10 @@
       ".(ts|tsx)": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": ["ts", "tsx", "js"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

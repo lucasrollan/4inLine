@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react'
 
-import styled from 'styled-components';
-import { Disc } from '../model';
+import styled from 'styled-components'
+import { Disc } from '../model'
 import { DISC_SIZE_PX } from './constants'
-import { StyledDisc } from "./disc";
+import { StyledDisc } from './disc'
 
 interface ColumnProps {
     col: Disc[]
@@ -23,14 +23,13 @@ const StyledColumn = styled.div`
 const StyledDropIndicator = styled(StyledDisc)`
     visibility: hidden;
     ${StyledColumn}:hover & {
-        visiblity: visible
+        visiblity: visible;
     }
-    
 `
-export const Column = ({ col, rows, canDrop, onSelected }: ColumnProps) => <StyledColumn
-    rows={rows}
-    onClick={() => canDrop && onSelected()}>
-        {col.map(
-            disc => <StyledDisc disc={disc} />
-        )}
-</StyledColumn>
+export const Column = ({ col, rows, canDrop, onSelected }: ColumnProps) => (
+    <StyledColumn rows={rows} onClick={() => canDrop && onSelected()}>
+        {col.map((disc) => (
+            <StyledDisc disc={disc} />
+        ))}
+    </StyledColumn>
+)

@@ -1,8 +1,12 @@
-import { Board } from "../board"
-import { Disc } from "../disc"
-import { PlayerAction } from "../player"
-import { Match } from "../match"
-import { GameVariation, gameVariationRuleset, gameVariationStartingBoard } from "./variations"
+import { Board } from '../board'
+import { Disc } from '../disc'
+import { PlayerAction } from '../player'
+import { Match } from '../match'
+import {
+    GameVariation,
+    gameVariationRuleset,
+    gameVariationStartingBoard,
+} from './variations'
 
 export class GameRules {
     static isActionAllowed(board: Board, action: PlayerAction): boolean {
@@ -19,24 +23,55 @@ export class GameRules {
 
     static getVariationInitialBoard(gameVariation: GameVariation): Disc[][] {
         if (gameVariationStartingBoard[gameVariation])
-        return gameVariationStartingBoard[gameVariation]
+            return gameVariationStartingBoard[gameVariation]
     }
 
     static isDraw(board: Board): boolean {
         return board.isFull()
     }
 
-    static isWinningAction(board: Board, action: PlayerAction, gameVariation: GameVariation): boolean {
+    static isWinningAction(
+        board: Board,
+        action: PlayerAction,
+        gameVariation: GameVariation
+    ): boolean {
         const columnIndex = action.columnIndex
         const lineLength = gameVariationRuleset[gameVariation].lineObjective
 
-        return this.hasLineOfLength(board, columnIndex, lineLength, direction.vertical)
-            || this.hasLineOfLength(board, columnIndex, lineLength, direction.horizontal)
-            || this.hasLineOfLength(board, columnIndex, lineLength, direction.ascending)
-            || this.hasLineOfLength(board, columnIndex, lineLength, direction.descending)
+        return (
+            this.hasLineOfLength(
+                board,
+                columnIndex,
+                lineLength,
+                direction.vertical
+            ) ||
+            this.hasLineOfLength(
+                board,
+                columnIndex,
+                lineLength,
+                direction.horizontal
+            ) ||
+            this.hasLineOfLength(
+                board,
+                columnIndex,
+                lineLength,
+                direction.ascending
+            ) ||
+            this.hasLineOfLength(
+                board,
+                columnIndex,
+                lineLength,
+                direction.descending
+            )
+        )
     }
 
-    static hasLineOfLength(board: Board, colIndex: number, lineLength: number, direction: Direction): boolean {
+    static hasLineOfLength(
+        board: Board,
+        colIndex: number,
+        lineLength: number,
+        direction: Direction
+    ): boolean {
         if (board.isColumnEmpty(colIndex)) {
             return false
         }
@@ -45,9 +80,24 @@ export class GameRules {
         const playerDisc = board.getDiscAt(colIndex, topRow)
         const oppositeDirection = [-direction[0], -direction[1]] as Direction
 
-        const length = 1
-            + this.countDiscsInDirection(board, colIndex, topRow, lineLength, direction, playerDisc)
-            + this.countDiscsInDirection(board, colIndex, topRow, lineLength, oppositeDirection, playerDisc)
+        const length =
+            1 +
+            this.countDiscsInDirection(
+                board,
+                colIndex,
+                topRow,
+                lineLength,
+                direction,
+                playerDisc
+            ) +
+            this.countDiscsInDirection(
+                board,
+                colIndex,
+                topRow,
+                lineLength,
+                oppositeDirection,
+                playerDisc
+            )
 
         return length >= lineLength
     }

@@ -1,4 +1,4 @@
-import { Disc } from "./disc";
+import { Disc } from './disc'
 
 export enum PlayerType {
     Human = 'HUMAN',

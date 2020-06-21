@@ -1,7 +1,16 @@
 import Logger from 'js-logger'
-import { Match, MatchFactory, PlayerType, PlayerAction, GameVariation } from './model'
+import {
+    Match,
+    MatchFactory,
+    PlayerType,
+    PlayerAction,
+    GameVariation,
+} from './model'
 
-export const startMatch = (gameVariation: GameVariation, opponent: PlayerType): Match => {
+export const startMatch = (
+    gameVariation: GameVariation,
+    opponent: PlayerType
+): Match => {
     const match = MatchFactory.build(gameVariation, opponent)
 
     match.attemptToRunAI()

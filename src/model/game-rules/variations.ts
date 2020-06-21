@@ -1,5 +1,5 @@
-import { Ruleset } from "./ruleset";
-import { Disc } from "../disc";
+import { Ruleset } from './ruleset'
+import { Disc } from '../disc'
 
 export enum GameVariation {
     connect4 = 'CONNECT_4',
@@ -11,7 +11,7 @@ export const gameVariationRuleset = {
     [GameVariation.connect4]: {
         boardSize: {
             columns: 7,
-            rows: 6
+            rows: 6,
         },
         lineObjective: 4,
         firstPlayer: Disc.secondary,
@@ -19,7 +19,7 @@ export const gameVariationRuleset = {
     [GameVariation.connect5]: {
         boardSize: {
             columns: 9,
-            rows: 6
+            rows: 6,
         },
         lineObjective: 5,
         firstPlayer: Disc.secondary,
@@ -27,7 +27,7 @@ export const gameVariationRuleset = {
     [GameVariation.tiny]: {
         boardSize: {
             columns: 5,
-            rows: 4
+            rows: 4,
         },
         lineObjective: 4,
         firstPlayer: Disc.secondary,
@@ -37,7 +37,14 @@ export const gameVariationRuleset = {
 export const gameVariationStartingBoard = {
     [GameVariation.connect4]: null as Disc[][],
     [GameVariation.connect5]: [
-        [Disc.primary, Disc.secondary, Disc.primary, Disc.secondary, Disc.primary, Disc.secondary],
+        [
+            Disc.primary,
+            Disc.secondary,
+            Disc.primary,
+            Disc.secondary,
+            Disc.primary,
+            Disc.secondary,
+        ],
         [],
         [],
         [],
@@ -45,7 +52,14 @@ export const gameVariationStartingBoard = {
         [],
         [],
         [],
-        [Disc.secondary, Disc.primary, Disc.secondary, Disc.primary, Disc.secondary, Disc.primary],
+        [
+            Disc.secondary,
+            Disc.primary,
+            Disc.secondary,
+            Disc.primary,
+            Disc.secondary,
+            Disc.primary,
+        ],
     ] as Disc[][],
     [GameVariation.tiny]: null as Disc[][],
 }

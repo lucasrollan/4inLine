@@ -1,6 +1,6 @@
-import { BoardSize } from "../board";
+import { BoardSize } from '../board'
 
 export interface Ruleset {
-    boardSize: BoardSize,
-    lineObjective: number,
+    boardSize: BoardSize
+    lineObjective: number
 }
