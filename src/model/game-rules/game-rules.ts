@@ -8,7 +8,8 @@ export class GameRules {
         return gameVariationRuleset[gameVariation].boardSize
     }
 
-    static getVariationInitialBoard(gameVariation: GameVariation) {
+    // TODO: Disc[][] == Board
+    static getVariationInitialBoard(gameVariation: GameVariation): Disc[][] {
         if (gameVariationStartingBoard[gameVariation])
         return gameVariationStartingBoard[gameVariation]
     }
@@ -17,13 +18,17 @@ export class GameRules {
         return !board.isColumnFull(action.columnIndex)
     }
 
-    static getNextPlayer(match: Match) {
-        return match.state.currentTurnPlayer === match.players[0]
-            ? match.players[1]
-            : match.players[0]
+    static getNextPlayer(match: Match): number {
+        return match.state.currentTurnPlayer === 0
+            ? 1
+            : 0
     }
 
-    static isDraw(board: Board) {
+    static getPlayerDisc(player: number): Disc {
+        return [Disc.primary, Disc.secondary][player]
+    }
+
+    static isDraw(board: Board): boolean {
         return board.isFull()
     }
 

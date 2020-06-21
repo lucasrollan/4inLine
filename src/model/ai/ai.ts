@@ -5,7 +5,7 @@ import Logger from "js-logger"
 import { getIndexOfHighest, average } from "./helpers"
 import { COLLUMN_NOT_ALLOWED } from './constants'
 
-export default class AI {
+export class AI {
     static ratingActionsDepth = 4
 
     static getInput(board: Board, disc: Disc, gameVariation: GameVariation): PlayerAction {

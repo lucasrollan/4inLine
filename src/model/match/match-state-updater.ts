@@ -1,11 +1,12 @@
-import { Player, PlayerAction } from "../player"
+import { PlayerAction } from "../player"
 import { Board } from "../board"
 import { MatchState } from "./match-state"
+import { GameRules } from "../game-rules"
 
 // TODO: use immutable object instead of this dance. Delete the whole class
 export class MatchStateUpdater {
     static performAction(state: MatchState, action: PlayerAction): MatchState {
-        const boardAction = {...action, disc: state.currentTurnPlayer.disc}
+        const boardAction = {...action, disc: GameRules.getPlayerDisc(state.currentTurnPlayer)}
         return this.setBoard(
             state,
             state.board.dropDisc(boardAction)
@@ -19,7 +20,7 @@ export class MatchStateUpdater {
         return this.set(state, 'isOngoing', value)
     }
 
-    static setCurrentTurnPlayer(state: MatchState, player: Player): MatchState {
+    static setCurrentTurnPlayer(state: MatchState, player: number): MatchState {
         return this.set(state, 'currentTurnPlayer', player)
     }
 

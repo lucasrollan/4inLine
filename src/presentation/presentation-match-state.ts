@@ -7,13 +7,13 @@ export interface PresentationBoard {
 export interface PresentationPlayer {
     name: string,
     type: AgentType,
-    color: string,
+    disc: Disc,
 }
 export interface PresentationMatchState {
     matchId: string,
     players: PresentationPlayer[],
     board: PresentationBoard
-    currentPlayer: PresentationPlayer
-    winner: PresentationPlayer
+    currentPlayer: number
+    winner: number
     isOngoing: boolean
 }

@@ -1,4 +1,4 @@
-import { Disc, Board, Player, Match } from "../model";
+import { Disc, Board, Player, Match, AgentType, GameRules } from "../model";
 import { PresentationMatchState, PresentationPlayer, PresentationBoard } from "./presentation-match-state";
 
 export class PresentationTranslator {
@@ -6,22 +6,24 @@ export class PresentationTranslator {
         return ({
             matchId: match.id,
             board: this.transformBoard(match.state.board),
-            players: match.players.map(this.transformPlayer),
-            currentPlayer: this.transformPlayer(match.state.currentTurnPlayer),
+            players: this.transformPlayers(match.players),
+            currentPlayer: match.state.currentTurnPlayer,
             isOngoing: match.state.isOngoing,
-            winner: this.transformPlayer(match.state.winner),
+            winner: match.state.winner,
         })
     }
 
-    static transformPlayer(player: Player): PresentationPlayer {
-        if (!player) {
-            return null
+    static transformPlayers(players: AgentType[]): PresentationPlayer[] {
+        const presentationPlayers = players.map((type, index) => ({
+            type,
+            name: type === AgentType.AI ? 'AI' : 'Player 1',
+            disc: GameRules.getPlayerDisc(index)
+        }))
+        if (players[1] === AgentType.Human) {
+            presentationPlayers[1].name = 'Player 2'
         }
-        return {
-            name: player.agent.name,
-            type: player.agent.type,
-            color: player.disc === Disc.primary ? 'red' : 'cyan',
-        }
+        
+        return presentationPlayers
     }
 
     static transformBoard(board: Board): PresentationBoard {

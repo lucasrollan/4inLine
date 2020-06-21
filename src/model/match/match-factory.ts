@@ -1,16 +1,16 @@
 import { GameVariation, GameRules } from "../game-rules"
-import { Agent } from "../agent"
+import { Agent, AgentType } from "../agent"
 import { Match } from "./match"
 import { Disc, BoardFactory } from "../board"
 import { MatchState } from "./match-state"
 
 export class MatchFactory {
-    static build(gameVariation: GameVariation, agents: [Agent, Agent]): Match {
+    static build(gameVariation: GameVariation, opponent: AgentType): Match {
         const matchId = Date.now().toString()
         const match = new Match(matchId, gameVariation)
         match.players = [
-            { agent: agents[0], disc: Disc.primary },
-            { agent: agents[1], disc: Disc.secondary },
+            opponent,
+            AgentType.Human
         ]
 
         match.state = this.buildMatchState(match)
@@ -23,11 +23,9 @@ export class MatchFactory {
         const initialBoard = GameRules.getVariationInitialBoard(match.gameVariation)
         const board = BoardFactory.build(boardSize, initialBoard)
 
-        const firstPlayer = match.players[0]
-
         const state: MatchState = {
             board,
-            currentTurnPlayer: firstPlayer,
+            currentTurnPlayer: 0,
             isOngoing: true,
             winner: null,
         }

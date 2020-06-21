@@ -1,14 +1,15 @@
-import { Player, PlayerAction } from "../player"
-import { GameVariation } from "../game-rules"
-import { MatchState } from "./match-state"
-import { MatchStateUpdater } from "./match-state-updater"
-import { AgentType, AIAgent } from "../agent"
-import { GameRules } from "../game-rules"
 import Logger from "js-logger"
-import AI from "../ai/ai"
+
+import { PlayerAction } from "../player"
+import { GameVariation } from "../game-rules"
+import { MatchStateUpdater } from "./match-state-updater"
+import { AgentType } from "../agent"
+import { GameRules } from "../game-rules"
+import { AI } from "../ai"
+import { MatchState } from "./match-state"
 
 export class Match {
-    players: [Player, Player]
+    players: [AgentType, AgentType]
     state: MatchState
 
     constructor (
@@ -20,9 +21,10 @@ export class Match {
     attemptToRunAI() {
         if (
             this.state.isOngoing
-            && this.state.currentTurnPlayer.agent.type === AgentType.AI
+            && this.players[this.state.currentTurnPlayer] === AgentType.AI
         ) {
-            const action: PlayerAction = AI.getInput(this.state.board, this.state.currentTurnPlayer.disc, this.gameVariation)
+            const playerDisc = GameRules.getPlayerDisc(this.state.currentTurnPlayer)
+            const action: PlayerAction = AI.getInput(this.state.board, playerDisc, this.gameVariation)
             this.takeTurn(action)
         }
     }

@@ -6,6 +6,7 @@ import { Board } from "./components/board";
 
 import { GameVariation, AgentType } from "./model";
 import { PresentationMatchState, startMatchRequest, performActionRequest } from "./presentation";
+import { DISC_COLORS } from './components/constants';
 
 Logger.useDefaults();
 
@@ -41,6 +42,8 @@ class Match extends React.Component<{}, PresentationMatchState> {
     }
 
     render() {
+        const currentPlayer = this.state.players && this.state.players[this.state.currentPlayer]
+        const winner = this.state.players && this.state.players[this.state.winner]
         return <div>
             {
                 this.state.board && <Board
@@ -50,8 +53,8 @@ class Match extends React.Component<{}, PresentationMatchState> {
             }
             {
                 this.state.isOngoing && this.state.currentPlayer && 
-                    <div style={{ color: this.state.currentPlayer.color}}>
-                        {this.state.currentPlayer.name}'s turn
+                    <div style={{ color: DISC_COLORS[currentPlayer.disc]}}>
+                        {currentPlayer.name}'s turn
                     </div>
             }
             {
@@ -59,7 +62,7 @@ class Match extends React.Component<{}, PresentationMatchState> {
                 !this.state.isOngoing && 'Game Over! '
             }
             {
-                !this.state.isOngoing && (this.state.winner ? `${this.state.winner.name} won` : 'It\'s a draw!')
+                !this.state.isOngoing && (winner ? `${winner.name} won` : 'It\'s a draw!')
             }
         </div>
     }
