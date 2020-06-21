@@ -1,4 +1,4 @@
-import { Disc } from '../model'
+import { Disc } from '../../model'
 
 export const DISC_SIZE_PX = 70
 

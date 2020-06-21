@@ -2,15 +2,14 @@ import Logger from 'js-logger'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import { Board } from './components/board'
-
-import { GameVariation, PlayerType } from './model'
+import { GameVariation, PlayerType } from '../model'
 import {
     PresentationMatchState,
     startMatchRequest,
     performActionRequest,
-} from './presentation'
+} from '../presentation'
 import { DISC_COLORS } from './components/constants'
+import { Board } from './components/board'
 
 Logger.useDefaults()
 
@@ -52,7 +51,7 @@ class Match extends React.Component<{}, PresentationMatchState> {
             <div>
                 {this.state.board && (
                     <Board
-                        board={this.state.board}
+                        match={this.state}
                         onPerformAction={(...args) =>
                             this.handlePerformAction(...args)
                         }

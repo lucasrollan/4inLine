@@ -1,6 +1,8 @@
 module.exports = {
     mode: "production",
 
+    entry: './src/client',
+
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
 

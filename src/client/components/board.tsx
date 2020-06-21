@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import styled from 'styled-components'
-import { PresentationBoard } from '../presentation'
+import { PresentationMatchState } from '../../presentation'
 import { Column } from './column'
 
 export interface BoardProps {
-    board: PresentationBoard
+    match: PresentationMatchState
     onPerformAction: (columnIndex: number) => void
 }
 const StyledBoard = styled.div`
@@ -15,11 +15,12 @@ const StyledBoard = styled.div`
 export const Board = (props: BoardProps) => (
     <div>
         <StyledBoard>
-            {props.board.columns.map((col, index) => (
+            {props.match.board.columns.map((col, index) => (
                 <Column
                     col={col}
-                    rows={props.board.size.rows}
-                    canDrop={col.length < props.board.size.rows}
+                    rows={props.match.board.size.rows}
+                    canDrop={col.length < props.match.board.size.rows}
+                    playerDisc={props.match.players[props.match.currentPlayer].disc}
                     onSelected={() => props.onPerformAction(index)}
                 />
             ))}
