@@ -1,6 +1,6 @@
-import { BoardColumn } from "./board-column"
 import { PlayerAction } from "../player"
 import { BoardActionPerformer } from "./board-action-performer"
+import { Disc } from "../disc"
 
 export interface BoardSize {
     columns: number
@@ -8,32 +8,32 @@ export interface BoardSize {
 }
 
 export class Board {
-    columns: BoardColumn[] = []
+    columns: Disc[][]
     constructor (public size: BoardSize) {}
 
     isEmpty() {
-        return this.columns.every(column => column.discs.length === 0)
+        return this.columns.every(column => column.length === 0)
     }
     isFull(): boolean {
-        return this.columns.every(column => column.discs.length === this.size.rows)
+        return this.columns.every(column => column.length === this.size.rows)
     }
     isColumnEmpty(columnIndex: number): boolean {
-        return this.columns[columnIndex].discs.length === 0
+        return this.columns[columnIndex].length === 0
     }
     isColumnFull(columnIndex: number): boolean {
-        return this.columns[columnIndex].discs.length === this.size.rows
+        return this.columns[columnIndex].length === this.size.rows
     }
     dropDisc(action: PlayerAction): Board {
         return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
     }
     getDiscCountInColumn(columnIndex: number): number {
-        return this.columns[columnIndex].discs.length
+        return this.columns[columnIndex].length
     }
     getTopRow(columnIndex: number): number {
-        return this.columns[columnIndex].discs.length - 1
+        return this.columns[columnIndex].length - 1
     }
     getDiscAt(columnIndex: number, row: number) {
-        return this.columns[columnIndex].discs[row]
+        return this.columns[columnIndex][row]
     }
     isWithinBoundaries(col: number, row: number): boolean {
         return row >= 0 && row < this.size.rows

@@ -28,7 +28,7 @@ export class PresentationTranslator {
 
     static transformBoard(board: Board): PresentationBoard {
         return {
-            columns: board.columns.map(c => c.discs),
+            columns: [...board.columns],
             size: board.size,
         }
     }
