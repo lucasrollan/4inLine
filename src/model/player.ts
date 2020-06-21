@@ -1,15 +1,15 @@
 import { Agent } from "./agent";
-import { DiscColor } from "./board";
+import { Disc } from "./board";
 
 // TODO: What is a player, really?
 // TODO: can the agent <-> disc relationship be moved to the match?
 export interface Player {
     agent: Agent
-    disc: DiscColor
+    disc: Disc
 }
 
 // TODO: needed?
 export interface PlayerAction {
     columnIndex: number
-    discColor?: DiscColor
+    disc?: Disc
 }

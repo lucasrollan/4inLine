@@ -1,5 +1,5 @@
 import { isNumber } from 'lodash'
-import { DiscColor } from '../disc'
+import { Disc } from '../disc'
 
 export function getIndexOfHighest(numbers: number[] = []): number {
     let highest = -Infinity
@@ -29,6 +29,6 @@ export function average(numbers: number[] = []): number {
     return length && sum / length
 }
 
-export function getOpponentDiscColor(discColor: DiscColor): DiscColor {
-    return discColor === DiscColor.primary ? DiscColor.secondary : DiscColor.primary
+export function getOpponentDisc(disc: Disc): Disc {
+    return disc === Disc.primary ? Disc.secondary : Disc.primary
 }

@@ -1,7 +1,7 @@
-import { DiscColor, AgentType, BoardSize } from "../model";
+import { Disc, AgentType, BoardSize } from "../model";
 
 export interface PresentationBoard {
-    columns: DiscColor[][]
+    columns: Disc[][]
     size: BoardSize
 }
 export interface PresentationPlayer {

@@ -1,4 +1,4 @@
-import { Board, DiscColor } from "../board"
+import { Board, Disc } from "../board"
 import { PlayerAction } from "../player"
 import { GameRules, GameVariation } from "../game-rules"
 import Logger from "js-logger"
@@ -8,7 +8,7 @@ import { COLLUMN_NOT_ALLOWED } from './constants'
 export default class AI {
     static ratingActionsDepth = 4
 
-    static getInput(board: Board, disc: DiscColor, gameVariation: GameVariation): PlayerAction {
+    static getInput(board: Board, disc: Disc, gameVariation: GameVariation): PlayerAction {
         if (board.isEmpty()) {
             return { columnIndex: Math.floor(board.size.columns/2) }
         }
@@ -20,13 +20,13 @@ export default class AI {
         return { columnIndex: highestRatedAction }
     }
 
-    private static rateAvailableActions(board: Board, disc: DiscColor, gameVariation: GameVariation, depth: number): number[] {
+    private static rateAvailableActions(board: Board, disc: Disc, gameVariation: GameVariation, depth: number): number[] {
         let ratings: number[] = []
         const columnCount = board.size.columns
         for(let i = 0; i < columnCount; i += 1) {
             const action: PlayerAction = {
                 columnIndex: i,
-                discColor: disc,
+                disc: disc,
             }
             let rating: number = COLLUMN_NOT_ALLOWED
             if (GameRules.isActionAllowed(board, action)) {
@@ -35,7 +35,7 @@ export default class AI {
                 if (GameRules.isWinningAction(boardToRate, action, gameVariation)) {
                     rating = 1
                 } else if (depth > 0) {
-                    const opponentDisc = action.discColor === DiscColor.primary ? DiscColor.secondary : DiscColor.primary
+                    const opponentDisc = action.disc === Disc.primary ? Disc.secondary : Disc.primary
                     const opponentActionRatings = this.rateAvailableActions(boardToRate, opponentDisc, gameVariation, depth - 1)
     
                     rating = -average(opponentActionRatings)

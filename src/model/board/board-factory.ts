@@ -1,9 +1,9 @@
 import { Board, BoardSize } from "./board"
 import { BoardColumn } from "./board-column"
-import { DiscColor } from "../disc"
+import { Disc } from "../disc"
 
 export class BoardFactory {
-    static build(size: BoardSize, initialBoard?: DiscColor[][]): Board {
+    static build(size: BoardSize, initialBoard?: Disc[][]): Board {
         const board = new Board(size)
         for(let i = 0; i<size.columns; i++) {
             const column = new BoardColumn()

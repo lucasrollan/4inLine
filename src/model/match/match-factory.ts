@@ -1,7 +1,7 @@
 import { GameVariation, GameRules } from "../game-rules"
 import { Agent } from "../agent"
 import { Match } from "./match"
-import { DiscColor, BoardFactory } from "../board"
+import { Disc, BoardFactory } from "../board"
 import { MatchState } from "./match-state"
 
 export class MatchFactory {
@@ -9,8 +9,8 @@ export class MatchFactory {
         const matchId = Date.now().toString()
         const match = new Match(matchId, gameVariation)
         match.players = [
-            { agent: agents[0], disc: DiscColor.primary },
-            { agent: agents[1], disc: DiscColor.secondary },
+            { agent: agents[0], disc: Disc.primary },
+            { agent: agents[1], disc: Disc.secondary },
         ]
 
         match.state = this.buildMatchState(match)

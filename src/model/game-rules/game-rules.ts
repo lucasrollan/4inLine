@@ -1,4 +1,4 @@
-import { Board, DiscColor } from "../board"
+import { Board, Disc } from "../board"
 import { PlayerAction } from "../player"
 import { Match } from "../match"
 import { GameVariation, gameVariationRuleset, gameVariationStartingBoard } from "./variations"
@@ -86,7 +86,7 @@ export class GameRules {
         lineLength: number,
         horizontalDirection: Direction,
         verticalDirection: Direction,
-        disc: DiscColor
+        disc: Disc
     ) {
         let count = 0
 

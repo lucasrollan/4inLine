@@ -1,12 +1,12 @@
 import * as React from "react";
 
 import styled from 'styled-components';
-import { DiscColor } from '../model';
+import { Disc } from '../model';
 import { DISC_SIZE_PX } from './constants'
 import { StyledDisc } from "./disc";
 
 interface ColumnProps {
-    col: DiscColor[]
+    col: Disc[]
     rows: number
     canDrop: boolean
     onSelected: () => void

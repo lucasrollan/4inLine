@@ -24,7 +24,7 @@ export class Board {
         return this.columns[columnIndex].discs.length === this.size.rows
     }
     dropDisc(action: PlayerAction): Board {
-        return BoardActionPerformer.dropDisc(this, action.columnIndex, action.discColor)
+        return BoardActionPerformer.dropDisc(this, action.columnIndex, action.disc)
     }
     getDiscCountInColumn(columnIndex: number): number {
         return this.columns[columnIndex].discs.length
