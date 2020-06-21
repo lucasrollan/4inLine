@@ -1,4 +1,4 @@
-import { Board, Match, PlayerType, GameRules } from "../model";
+import { Board, Match, PlayerType, getPlayerDisc } from "../model";
 import { PresentationMatchState, PresentationPlayer, PresentationBoard } from "./presentation-match-state";
 
 export class PresentationTranslator {
@@ -17,11 +17,8 @@ export class PresentationTranslator {
         const presentationPlayers = players.map((type, index) => ({
             type,
             name: type === PlayerType.AI ? 'AI' : 'Player 1',
-            disc: GameRules.getPlayerDisc(index)
+            disc: getPlayerDisc(index)
         }))
-        if (players[1] === PlayerType.Human) {
-            presentationPlayers[1].name = 'Player 2'
-        }
         
         return presentationPlayers
     }

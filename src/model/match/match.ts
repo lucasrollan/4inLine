@@ -4,6 +4,7 @@ import { PlayerAction } from "../player"
 import { GameVariation } from "../game-rules"
 import { PlayerType } from "../player"
 import { GameRules } from "../game-rules"
+import { getPlayerDisc } from "../disc"
 import { AI } from "../ai"
 import { MatchState } from "./match-state"
 
@@ -22,7 +23,7 @@ export class Match {
             this.state.isOngoing
             && this.players[this.state.currentTurnPlayer] === PlayerType.AI
         ) {
-            const playerDisc = GameRules.getPlayerDisc(this.state.currentTurnPlayer)
+            const playerDisc = getPlayerDisc(this.state.currentTurnPlayer)
             const action: PlayerAction = AI.getInput(this.state.board, playerDisc, this.gameVariation)
             this.takeTurn(action)
         }
@@ -30,7 +31,7 @@ export class Match {
 
     takeTurn(action: PlayerAction): void {
         if (this.state.isOngoing && GameRules.isActionAllowed(this.state.board, action)) {
-            const boardAction = {...action, disc: GameRules.getPlayerDisc(this.state.currentTurnPlayer)}
+            const boardAction = {...action, disc: getPlayerDisc(this.state.currentTurnPlayer)}
             this.updateState({
                 board: this.state.board.dropDisc(boardAction)
             })

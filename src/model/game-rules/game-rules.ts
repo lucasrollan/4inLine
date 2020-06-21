@@ -8,7 +8,6 @@ export class GameRules {
         return gameVariationRuleset[gameVariation].boardSize
     }
 
-    // TODO: Disc[][] == Board
     static getVariationInitialBoard(gameVariation: GameVariation): Disc[][] {
         if (gameVariationStartingBoard[gameVariation])
         return gameVariationStartingBoard[gameVariation]
@@ -22,10 +21,6 @@ export class GameRules {
         return match.state.currentTurnPlayer === 0
             ? 1
             : 0
-    }
-
-    static getPlayerDisc(player: number): Disc {
-        return [Disc.primary, Disc.secondary][player]
     }
 
     static isDraw(board: Board): boolean {
