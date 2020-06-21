@@ -2,7 +2,6 @@ import Logger from "js-logger"
 
 import { PlayerAction } from "../player"
 import { GameVariation } from "../game-rules"
-import { MatchStateUpdater } from "./match-state-updater"
 import { PlayerType } from "../player"
 import { GameRules } from "../game-rules"
 import { AI } from "../ai"
