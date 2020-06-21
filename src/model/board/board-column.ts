@@ -1,8 +1,8 @@
-import { Disc } from "../disc"
+import { DiscColor } from "../disc"
 
 // TODO: this class can be replaced by Disc[]
 export class BoardColumn {
-    discs: Disc[] = []
+    discs: DiscColor[] = []
 
     isEmpty(): Boolean {
         return this.discs.length === 0

@@ -1,4 +1,4 @@
-import { Disc, Board, Player, Match } from "../model";
+import { DiscColor, Board, Player, Match } from "../model";
 import { PresentationMatchState, PresentationPlayer, PresentationBoard } from "./presentation-match-state";
 
 export class PresentationTranslator {
@@ -20,7 +20,7 @@ export class PresentationTranslator {
         return {
             name: player.agent.name,
             type: player.agent.type,
-            color: player.disc === Disc.A ? 'red' : 'cyan',
+            color: player.disc === DiscColor.primary ? 'red' : 'cyan',
         }
     }
 

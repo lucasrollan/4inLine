@@ -1,5 +1,5 @@
 import { Ruleset } from "./ruleset";
-import { Disc } from "../board";
+import { DiscColor } from "../board";
 
 export enum GameVariation {
     connect4 = 'CONNECT_4',
@@ -14,7 +14,7 @@ export const gameVariationRuleset = {
             rows: 6
         },
         lineObjective: 4,
-        firstPlayer: Disc.B,
+        firstPlayer: DiscColor.secondary,
     } as Ruleset,
     [GameVariation.connect5]: {
         boardSize: {
@@ -22,7 +22,7 @@ export const gameVariationRuleset = {
             rows: 6
         },
         lineObjective: 5,
-        firstPlayer: Disc.B,
+        firstPlayer: DiscColor.secondary,
     } as Ruleset,
     [GameVariation.tiny]: {
         boardSize: {
@@ -30,14 +30,14 @@ export const gameVariationRuleset = {
             rows: 4
         },
         lineObjective: 4,
-        firstPlayer: Disc.B,
+        firstPlayer: DiscColor.secondary,
     } as Ruleset,
 }
 
 export const gameVariationStartingBoard = {
-    [GameVariation.connect4]: null as Disc[][],
+    [GameVariation.connect4]: null as DiscColor[][],
     [GameVariation.connect5]: [
-        [Disc.A, Disc.B, Disc.A, Disc.B, Disc.A, Disc.B],
+        [DiscColor.primary, DiscColor.secondary, DiscColor.primary, DiscColor.secondary, DiscColor.primary, DiscColor.secondary],
         [],
         [],
         [],
@@ -45,7 +45,7 @@ export const gameVariationStartingBoard = {
         [],
         [],
         [],
-        [Disc.B, Disc.A, Disc.B, Disc.A, Disc.B, Disc.A],
-    ] as Disc[][],
-    [GameVariation.tiny]: null as Disc[][],
+        [DiscColor.secondary, DiscColor.primary, DiscColor.secondary, DiscColor.primary, DiscColor.secondary, DiscColor.primary],
+    ] as DiscColor[][],
+    [GameVariation.tiny]: null as DiscColor[][],
 }
