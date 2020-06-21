@@ -14,7 +14,7 @@ export class Match {
 
     constructor(public id: string, public gameVariation: GameVariation) {}
 
-    attemptToRunAI() {
+    attemptToRunAI(): void {
         if (
             this.state.isOngoing &&
             this.players[this.state.currentTurnPlayer] === PlayerType.AI

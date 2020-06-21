@@ -1,4 +1,4 @@
-import { Board } from '../board'
+import { Board, BoardSize } from '../board'
 import { Disc } from '../disc'
 import { PlayerAction } from '../player'
 import { Match } from '../match'
@@ -17,7 +17,7 @@ export class GameRules {
         return match.state.currentTurnPlayer === 0 ? 1 : 0
     }
 
-    static getVariationGridSize(gameVariation: GameVariation) {
+    static getVariationGridSize(gameVariation: GameVariation): BoardSize {
         return gameVariationRuleset[gameVariation].boardSize
     }
 
@@ -109,7 +109,7 @@ export class GameRules {
         lineLength: number,
         direction: Direction,
         disc: Disc
-    ) {
+    ): number {
         let count = 0
 
         for (
