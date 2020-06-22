@@ -12,28 +12,41 @@ import { MatchSelector } from './components/match-selector'
 
 Logger.useDefaults()
 
+const initialState: PresentationMatchState = {
+    board: null,
+    currentPlayer: null,
+    matchId: null,
+    isOngoing: false,
+    players: null,
+    winner: null,
+    currentTurn: null,
+    pastTurn: null,
+}
+
 class MatchUI extends React.Component<{}, PresentationMatchState> {
     match: Match
+    unsubscribeFromMatch: () => void
 
     constructor(props: {}) {
         super(props)
 
-        this.state = {
-            board: null,
-            currentPlayer: null,
-            matchId: null,
-            isOngoing: false,
-            players: null,
-            winner: null,
-            currentTurn: null,
-            pastTurn: null,
-        }
+        this.state = initialState
     }
 
     startMatch(gameVariation: GameVariation, opponent: PlayerType) {
+        if (this.unsubscribeFromMatch) {
+            this.unsubscribeFromMatch()
+        }
+        this.setState(initialState)
         this.match = createMatch(gameVariation, opponent)
-        this.match.subscribe((matchState) => this.onMatchUpdate(matchState))
+        this.unsubscribeFromMatch = this.match.subscribe((matchState) => this.onMatchUpdate(matchState))
         startMatch(this.match)
+    }
+
+    componentWillUnmount() {
+        if (this.unsubscribeFromMatch) {
+            this.unsubscribeFromMatch()
+        }
     }
 
     onMatchUpdate(matchState: MatchState): void {

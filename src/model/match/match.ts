@@ -76,8 +76,14 @@ export class Match {
         this.subscribers.forEach((sub) => sub(this.state))
     }
 
-    subscribe(onUpdate: subscriber): void {
+    subscribe(onUpdate: subscriber): () => void {
         this.subscribers = this.subscribers.concat(onUpdate)
         onUpdate(this.state)
+
+        const unsubscribe = () => {
+            this.subscribers = this.subscribers.filter((sub: subscriber) => sub !== onUpdate)
+        }
+
+        return unsubscribe
     }
 }
