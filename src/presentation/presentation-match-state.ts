@@ -16,4 +16,6 @@ export interface PresentationMatchState {
     currentPlayer: number
     winner: number
     isOngoing: boolean
+    pastTurn: PlayerType
+    currentTurn: PlayerType
 }

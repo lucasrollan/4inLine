@@ -2,18 +2,20 @@ import Logger from 'js-logger'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import { GameVariation, PlayerType } from '../model'
+import { GameVariation, PlayerType, Match, MatchState } from '../model'
 import {
     PresentationMatchState,
-    startMatchRequest,
-    performActionRequest,
+    PresentationTranslator,
 } from '../presentation'
-import { DISC_COLORS } from './components/constants'
 import { Board } from './components/board'
+import { createMatch, startMatch, performAction } from '../application'
+import { isNumber } from 'lodash'
 
 Logger.useDefaults()
 
-class Match extends React.Component<{}, PresentationMatchState> {
+class MatchUI extends React.Component<{}, PresentationMatchState> {
+    match: Match
+
     constructor(props: {}) {
         super(props)
 
@@ -24,22 +26,30 @@ class Match extends React.Component<{}, PresentationMatchState> {
             isOngoing: false,
             players: null,
             winner: null,
+            currentTurn: null,
+            pastTurn: null,
         }
     }
 
     componentDidMount() {
         // TODO: take from UI
-        startMatchRequest(GameVariation.connect4, PlayerType.AI).then((match) =>
-            this.setState(match)
-        )
+        this.match = createMatch(GameVariation.connect4, PlayerType.AI)
+        this.match.subscribe((matchState) => this.onMatchUpdate(matchState))
+        startMatch(this.match)
+    }
+
+    onMatchUpdate(matchState: MatchState): void {
+        Logger.log('update', matchState)
+        const newState = PresentationTranslator.translateFromDomain(this.match, matchState)
+        if (newState.pastTurn === PlayerType.AI) {
+            window.setTimeout(() => this.setState(newState), 1500)
+        } else {
+            this.setState(newState)
+        }
     }
 
     handlePerformAction(columnIndex?: number) {
-        if (this.state.isOngoing) {
-            performActionRequest('', columnIndex).then((match) =>
-                this.setState(match)
-            )
-        }
+        performAction(this.match, columnIndex)
     }
 
     render() {
@@ -57,24 +67,21 @@ class Match extends React.Component<{}, PresentationMatchState> {
                         }
                     />
                 )}
-                {this.state.isOngoing && this.state.currentPlayer && (
-                    <div style={{ color: DISC_COLORS[currentPlayer.disc] }}>
-                        {currentPlayer.name}'s turn
-                    </div>
-                )}
-                {
-                    //TODO: make this more useful
-                    !this.state.isOngoing && 'Game Over! '
+                {this.state.isOngoing && isNumber(this.state.currentPlayer) && 
+                    <h2>{currentPlayer.name}'s turn</h2>
                 }
-                {!this.state.isOngoing &&
-                    (winner ? `${winner.name} won` : "It's a draw!")}
+                {
+                    !this.state.isOngoing && <div>
+                        <h1>{(winner ? `${winner.name} won` : "It's a draw!")}</h1>
+                        <h2>Game Over!</h2>
+                    </div>
+                }
             </div>
         )
     }
 }
 
 ReactDOM.render(
-    // TODO: make it SPA
-    <Match />,
+    <MatchUI />,
     document.getElementById('app')
 )

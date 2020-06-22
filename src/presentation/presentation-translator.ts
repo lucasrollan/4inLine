@@ -1,4 +1,4 @@
-import { Board, Match, PlayerType, getPlayerDisc } from '../model'
+import { Board, Match, PlayerType, getPlayerDisc, MatchState } from '../model'
 import {
     PresentationMatchState,
     PresentationPlayer,
@@ -6,14 +6,16 @@ import {
 } from './presentation-match-state'
 
 export class PresentationTranslator {
-    static translateFromDomain(match: Match): PresentationMatchState {
+    static translateFromDomain(match: Match, matchState: MatchState): PresentationMatchState {
         return {
             matchId: match.id,
-            board: PresentationTranslator.transformBoard(match.state.board),
+            board: PresentationTranslator.transformBoard(matchState.board),
             players: PresentationTranslator.transformPlayers(match.players),
-            currentPlayer: match.state.currentTurnPlayer,
-            isOngoing: match.state.isOngoing,
-            winner: match.state.winner,
+            currentPlayer: matchState.currentTurnPlayer,
+            isOngoing: matchState.isOngoing,
+            winner: matchState.winner,
+            pastTurn: match.players[matchState.currentTurnPlayer === 1 ? 0 : 1],
+            currentTurn: match.players[matchState.currentTurnPlayer],
         }
     }
 
@@ -23,6 +25,10 @@ export class PresentationTranslator {
             name: type === PlayerType.AI ? 'AI' : 'Player 1',
             disc: getPlayerDisc(index),
         }))
+
+        if (presentationPlayers[0].type === PlayerType.Human) {
+            presentationPlayers[1].name = 'Player 2'
+        }
 
         return presentationPlayers
     }

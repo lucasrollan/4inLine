@@ -5,20 +5,28 @@ import {
     PlayerType,
     PlayerAction,
     GameVariation,
+    subscriber,
 } from './model'
 
-export const startMatch = (
+export const createMatch = (
     gameVariation: GameVariation,
     opponent: PlayerType
 ): Match => {
     const match = MatchFactory.build(gameVariation, opponent)
-
-    match.attemptToRunAI()
+    Logger.log('match created', match)
 
     return match
 }
 
-export const performAction = (match: Match, columnIndex: number): Match => {
+export const subscribeToMatch = (match: Match, onUpdate: subscriber): void => {
+    match.subscribe(onUpdate)
+}
+
+export const startMatch = (match: Match): void => {
+    match.attemptToRunAI()
+}
+
+export const performAction = (match: Match, columnIndex: number): void => {
     const action: PlayerAction = {
         columnIndex,
     }
@@ -26,6 +34,4 @@ export const performAction = (match: Match, columnIndex: number): Match => {
     match.takeTurn(action)
 
     match.attemptToRunAI()
-
-    return match
 }

@@ -8,9 +8,12 @@ import { getPlayerDisc } from '../disc'
 import { AI } from '../ai'
 import { MatchState } from './match-state'
 
+export type subscriber = (newState: MatchState) => void
+
 export class Match {
     players: [PlayerType, PlayerType]
     state: MatchState
+    subscribers: subscriber[] = []
 
     constructor(public id: string, public gameVariation: GameVariation) {}
 
@@ -38,43 +41,43 @@ export class Match {
             this.state.isOngoing &&
             GameRules.isActionAllowed(this.state.board, action)
         ) {
+            let nextState: Partial<MatchState> = {}
             const boardAction = {
                 ...action,
                 disc: getPlayerDisc(this.state.currentTurnPlayer),
             }
-            this.updateState({
-                board: this.state.board.dropDisc(boardAction),
-            })
+            nextState.board = this.state.board.dropDisc(boardAction)
             Logger.log('action was performed', this.state)
 
             if (
                 GameRules.isWinningAction(
-                    this.state.board,
+                    nextState.board,
                     action,
                     this.gameVariation
                 )
             ) {
-                this.updateState({
-                    winner: this.state.currentTurnPlayer,
-                    isOngoing: false,
-                })
-            } else if (GameRules.isDraw(this.state.board)) {
-                this.updateState({
-                    isOngoing: false,
-                })
+                nextState.winner = this.state.currentTurnPlayer
+                nextState.isOngoing = false
+            } else if (GameRules.isDraw(nextState.board)) {
+                nextState.isOngoing = false
             } else {
-                const nextPlayer = GameRules.getNextPlayer(this)
-                this.updateState({
-                    currentTurnPlayer: nextPlayer,
-                })
+                nextState.currentTurnPlayer = GameRules.getNextPlayer(this)
             }
+
+            this.updateState(nextState)
         }
     }
 
-    private updateState(newState: Partial<MatchState>): void {
+    updateState(newState: Partial<MatchState>): void {
         this.state = {
             ...this.state,
             ...newState,
         }
+        this.subscribers.forEach(sub => sub(this.state))
+    }
+
+    subscribe(onUpdate: subscriber): void {
+        this.subscribers = this.subscribers.concat(onUpdate)
+        onUpdate(this.state)
     }
 }

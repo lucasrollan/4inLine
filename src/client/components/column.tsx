@@ -13,32 +13,37 @@ interface ColumnProps {
     onSelected: () => void
 }
 const StyledColumnContainer = styled.div`
-    width: ${DISC_SIZE_PX}px;
-    height: ${(props: { rows: number }) => (props.rows + 1) * DISC_SIZE_PX}px;
-    margin-top: ${DISC_SIZE_PX + 10}px;
+    margin-top: 10px;
     position: relative;
     display: flex;
     flex-direction: column;
 `
 const StyledColumn = styled.div`
+    box-sizing: border-box;
+    width: ${DISC_SIZE_PX + 4}px;
+    height: ${(props: { rows: number }) => (props.rows) * DISC_SIZE_PX + 4}px;
     border: 1px solid blue;
     display: flex;
     flex-direction: column-reverse;
+    align-items: center;
 `
 const StyledDropIndicator = styled.div`
     visibility: hidden;
-    ${StyledColumnContainer}:hover & {
-        visibility: visible;
-    }
+    transform: translateX(2px);
+    ${(props: { canDrop: boolean }) => props.canDrop && `
+        ${StyledColumnContainer}:hover & {
+            visibility: visible;
+        }
+    `}
 `
 export const Column = ({ col, rows, canDrop, playerDisc, onSelected }: ColumnProps) => (
-    <StyledColumnContainer rows={rows} onClick={() => canDrop && onSelected()}>
-            {
-                canDrop && <StyledDropIndicator>
-                    <StyledDisc disc={playerDisc} />
-                </StyledDropIndicator>
-            }
-        <StyledColumn>
+    <StyledColumnContainer onClick={() => canDrop && onSelected()}>
+        {
+            <StyledDropIndicator canDrop={canDrop}>
+                <StyledDisc disc={playerDisc} />
+            </StyledDropIndicator>
+        }
+        <StyledColumn rows={rows}>
             {col.map((disc, index) => (
                 <StyledDisc disc={disc} height={rows - index} />
             ))}
