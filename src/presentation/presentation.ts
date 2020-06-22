@@ -16,7 +16,7 @@
 
 // export function subscribeRequest(match: Match, onUpdate: subscriber): Promise<void> {
 //     const promise = new Promise<void>((resolve, reject) => {
-//         const callback = (state: MatchState): PresentationMatchState => 
+//         const callback = (state: MatchState): PresentationMatchState =>
 //         subscribeToMatch(match, onUpdate)
 //         resolve()
 //     })

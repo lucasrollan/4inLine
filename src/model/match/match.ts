@@ -73,7 +73,7 @@ export class Match {
             ...this.state,
             ...newState,
         }
-        this.subscribers.forEach(sub => sub(this.state))
+        this.subscribers.forEach((sub) => sub(this.state))
     }
 
     subscribe(onUpdate: subscriber): void {

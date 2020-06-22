@@ -6,7 +6,10 @@ import {
 } from './presentation-match-state'
 
 export class PresentationTranslator {
-    static translateFromDomain(match: Match, matchState: MatchState): PresentationMatchState {
+    static translateFromDomain(
+        match: Match,
+        matchState: MatchState
+    ): PresentationMatchState {
         return {
             matchId: match.id,
             board: PresentationTranslator.transformBoard(matchState.board),
