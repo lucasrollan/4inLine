@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import styled from 'styled-components'
-import { PresentationMatchState } from '../../presentation'
+import { PresentationMatchState } from '../presentation-match-state'
 import { Column } from './column'
 import { PlayerType } from '../../model'
 

@@ -3,13 +3,12 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { GameVariation, PlayerType, Match, MatchState } from '../model'
-import {
-    PresentationMatchState,
-    PresentationTranslator,
-} from '../presentation'
-import { Board } from './components/board'
 import { createMatch, startMatch, performAction } from '../application'
+import { PresentationTranslator } from './presentation-translator'
+import { PresentationMatchState } from './presentation-match-state'
+import { Board } from './components/board'
 import { isNumber } from 'lodash'
+import { MatchSelector } from './components/match-selector'
 
 Logger.useDefaults()
 
@@ -31,9 +30,8 @@ class MatchUI extends React.Component<{}, PresentationMatchState> {
         }
     }
 
-    componentDidMount() {
-        // TODO: take from UI
-        this.match = createMatch(GameVariation.connect4, PlayerType.AI)
+    startMatch(gameVariation: GameVariation, opponent: PlayerType) {
+        this.match = createMatch(gameVariation, opponent)
         this.match.subscribe((matchState) => this.onMatchUpdate(matchState))
         startMatch(this.match)
     }
@@ -58,24 +56,27 @@ class MatchUI extends React.Component<{}, PresentationMatchState> {
         const winner =
             this.state.players && this.state.players[this.state.winner]
         return (
-            <div>
-                {this.state.board && (
-                    <Board
-                        match={this.state}
-                        onPerformAction={(...args) =>
-                            this.handlePerformAction(...args)
-                        }
-                    />
-                )}
-                {this.state.isOngoing && isNumber(this.state.currentPlayer) && 
-                    <h2>{currentPlayer.name}'s turn</h2>
-                }
-                {
-                    !this.state.isOngoing && <div>
-                        <h1>{(winner ? `${winner.name} won` : "It's a draw!")}</h1>
-                        <h2>Game Over!</h2>
-                    </div>
-                }
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <MatchSelector onMatchSelected={(gameVariation, opponent) => this.startMatch(gameVariation, opponent)} />
+                    {this.state.board && (
+                        <div style={{ marginLeft: '50px' }}>
+                            <Board
+                                match={this.state}
+                                onPerformAction={(...args) =>
+                                    this.handlePerformAction(...args)
+                                }
+                            />
+                            {this.state.isOngoing && isNumber(this.state.currentPlayer) && 
+                                <h2>{currentPlayer.name}'s turn</h2>
+                            }
+                            {
+                                !this.state.isOngoing && <div>
+                                    <h1>{(winner ? `${winner.name} won` : "It's a draw!")}</h1>
+                                    <h2>Game Over!</h2>
+                                </div>
+                            }
+                        </div>
+                    )}
             </div>
         )
     }

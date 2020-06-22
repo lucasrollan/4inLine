@@ -1,7 +1,4 @@
 ## to do
-add delay to AI plays
-add propper readme
-improve client
 
 ## to improve
 not all files covered with unit tests. most critical ones are, though
